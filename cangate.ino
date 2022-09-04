@@ -169,6 +169,7 @@ int invert; // used to invert output event
  /********************************************************************************************/
  //  event status flags
  /********************************************************************************************/
+ /*
    bool rxEvent1 = 0;     
    bool rxEvent2 = 0;       
    bool rxEvent3 = 0;    
@@ -273,7 +274,7 @@ int invert; // used to invert output event
    bool rxEvent102 = 0;  
    bool rxEvent103 = 0;   
    bool rxEvent104 = 0;      
-
+*/
 
 
 
@@ -1242,20 +1243,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 //  2 Input AND Gate 1
 /********************************************************************************************/
         if (eventVariable2 == 21){
-         if (invert != 21 && sendEvent21 == 1 && rxEvent1 == 1 && rxEvent2 == 1){    
+         if (invert != 21 && sendEvent21 == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
               cbus.sendOnEvent(true, logicEventNumber21);
                sendEvent21 = 0;
                   }
-              if (invert == 21 && sendEvent21 == 1 && rxEvent1 == 1 && rxEvent2 == 1){    
+              if (invert == 21 && sendEvent21 == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
                  cbus.sendOffEvent(true, logicEventNumber21);
                   sendEvent21 = 0;
                   }
                   
-           else if (invert != 21 && sendEvent21 == 0 && (rxEvent1 == 0 || rxEvent2 == 0)) {
+           else if (invert != 21 && sendEvent21 == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
                     cbus.sendOffEvent(true, logicEventNumber21);
                     sendEvent21 = 1; 
                     }
-              else if (invert == 21 && sendEvent21 == 0 && (rxEvent1 == 0 || rxEvent2 == 0)) {
+              else if (invert == 21 && sendEvent21 == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
                       cbus.sendOnEvent(true, logicEventNumber21);
                       sendEvent21 = 1; 
                     }
@@ -1268,20 +1269,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 2
 /********************************************************************************************/
         if (eventVariable2 == 22){
-         if (invert != 22 && sendEvent22 == 1 && rxEvent3 == 1 && rxEvent4 == 1){    
+         if (invert != 22 && sendEvent22 == 1 && rxEvent[3] == 1 && rxEvent[4] == 1){    
               cbus.sendOnEvent(true, logicEventNumber22);
               sendEvent22 = 0;
                   }
-                  if (invert == 22 && sendEvent22 == 1 && rxEvent3 == 1 && rxEvent4 == 1){    
+                  if (invert == 22 && sendEvent22 == 1 && rxEvent[3] == 1 && rxEvent[4] == 1){    
                      cbus.sendOffEvent(true, logicEventNumber21);
                      sendEvent22 = 0;
                   }
                   
-               else if (invert != 22 && sendEvent22 == 0 && (rxEvent3 == 0 || rxEvent4 == 0)) {
+               else if (invert != 22 && sendEvent22 == 0 && (rxEvent[3] == 0 || rxEvent[4] == 0)) {
                         cbus.sendOffEvent(true, logicEventNumber22);
                         sendEvent22 = 1; 
                    } 
-                     else if (invert == 22 && sendEvent22 == 0 && (rxEvent3 == 0 || rxEvent4 == 0)) {
+                     else if (invert == 22 && sendEvent22 == 0 && (rxEvent[3] == 0 || rxEvent[4] == 0)) {
                               cbus.sendOnEvent(true, logicEventNumber22);
                               sendEvent22 = 1; 
                       } 
@@ -1294,20 +1295,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 3
 /********************************************************************************************/
         if (eventVariable2 == 23){
-         if (invert != 23 && sendEvent23 == 1 && rxEvent5 == 1 && rxEvent6 == 1){    
+         if (invert != 23 && sendEvent23 == 1 && rxEvent[5] == 1 && rxEvent[6] == 1){    
               cbus.sendOnEvent(true, logicEventNumber23);
                sendEvent23 = 0;
                   }
-                  if  (invert == 23 && sendEvent23 == 1 && rxEvent5 == 1 && rxEvent6 == 1){    
+                  if  (invert == 23 && sendEvent23 == 1 && rxEvent[5] == 1 && rxEvent[6] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber23);
                       sendEvent23 = 0;
                   }
                  
-               else if (invert != 23 && sendEvent23 == 0 && (rxEvent5 == 0 || rxEvent6 == 0)) {
+               else if (invert != 23 && sendEvent23 == 0 && (rxEvent[5] == 0 || rxEvent[6] == 0)) {
                         cbus.sendOffEvent(true, logicEventNumber23);
                         sendEvent23 = 1; 
                    } 
-                   else if (invert == 23 && sendEvent23 == 0 && (rxEvent5 == 0 || rxEvent6 == 0)) {
+                   else if (invert == 23 && sendEvent23 == 0 && (rxEvent[5] == 0 || rxEvent[6] == 0)) {
                           cbus.sendOnEvent(true, logicEventNumber23);
                           sendEvent23 = 1; 
                    } 
@@ -1320,20 +1321,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 4
 /********************************************************************************************/
         if (eventVariable2 == 24){
-         if (invert != 24 && sendEvent24 == 1 && rxEvent7 == 1 && rxEvent8 == 1){    
+         if (invert != 24 && sendEvent24 == 1 && rxEvent[7] == 1 && rxEvent[8] == 1){    
               cbus.sendOnEvent(true, logicEventNumber24);
                sendEvent24 = 0;
                   }
-                  if (invert == 24 && sendEvent24 == 1 && rxEvent7 == 1 && rxEvent8 == 1){    
+                  if (invert == 24 && sendEvent24 == 1 && rxEvent[7] == 1 && rxEvent[8] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber24);
                       sendEvent24 = 0;
                   }
 
-               else if (invert != 24 && sendEvent24 == 0 && (rxEvent7 == 0 || rxEvent8 == 0)){
+               else if (invert != 24 && sendEvent24 == 0 && (rxEvent[7] == 0 || rxEvent[8] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber24);
                         sendEvent24 = 1; 
                     } 
-                   else if (invert == 24 && sendEvent24 == 0 && (rxEvent7 == 0 || rxEvent8 == 0)){
+                   else if (invert == 24 && sendEvent24 == 0 && (rxEvent[7] == 0 || rxEvent[8] == 0)){
                             cbus.sendOnEvent(true, logicEventNumber24);
                             sendEvent24 = 1; 
                     }
