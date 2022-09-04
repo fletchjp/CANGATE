@@ -1346,20 +1346,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 5
 /********************************************************************************************/
         if (eventVariable2 == 25){
-         if (invert != 25 && sendEvent25 == 1 && rxEvent9 == 1 && rxEvent10 == 1){    
+         if (invert != 25 && sendEvent25 == 1 && rxEvent[9] == 1 && rxEvent[10] == 1){    
               cbus.sendOnEvent(true, logicEventNumber25);
                sendEvent25 = 0;
                   }
-                   if  (invert == 25 && sendEvent25 == 1 && rxEvent9 == 1 && rxEvent10 == 1){    
+                   if  (invert == 25 && sendEvent25 == 1 && rxEvent[9] == 1 && rxEvent[10] == 1){    
                         cbus.sendOffEvent(true, logicEventNumber25);
                         sendEvent25 = 0;
                   }
 
-               else if (invert != 25 && sendEvent25 == 0 && (rxEvent9 == 0 || rxEvent10 == 0)){
+               else if (invert != 25 && sendEvent25 == 0 && (rxEvent[9] == 0 || rxEvent[10] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber25);
                         sendEvent25 = 1; 
                    }
-                   else if (invert == 25 && sendEvent25 == 0 && (rxEvent9 == 0 || rxEvent10 == 0)){
+                   else if (invert == 25 && sendEvent25 == 0 && (rxEvent[9] == 0 || rxEvent[10] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber25);
                           sendEvent25 = 1; 
                    }
