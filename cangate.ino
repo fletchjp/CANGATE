@@ -64,6 +64,9 @@ VCC         		5V
   // Explore using arrays to reduce the amount of repetitive code.
   #define INCOMING_EVENT1_VALUES 104
   bool rxEvent[INCOMING_EVENT1_VALUES+1]; // These need to be set to 0.
+  #define SEND_EVENT_VALUES 58
+  bool sendEvent[SEND_EVENT_VALUES+1]; // Not all of these are used. All set to 1.
+  int logicEventNumber[SEND_EVENT_VALUES+1]; // Not all of these are used. Set to 10 times the index.
 
 /********************************************************************************************/
 //Variables
@@ -240,6 +243,11 @@ void setup () {
   for (int i = 1; i <= INCOMING_EVENT1_VALUES; i++) {
     rxEvent[i] = 0;
   }
+// Set all these to one. Not all are used.
+  for (int i = 1; i <= SEND_EVENT_VALUES; i++) {
+    sendEvent[i] = 1;
+    logicEventNumber[i] = i*10;
+  }
 
 
 } // End Of Set Up
@@ -296,22 +304,22 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 //  2 Input AND Gate 1
 /********************************************************************************************/
         if (eventVariable2 == 21){
-         if (invert != 21 && sendEvent21 == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
+         if (invert != 21 && sendEvent[21] == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
               cbus.sendOnEvent(true, logicEventNumber21);
-               sendEvent21 = 0;
+               sendEvent[21] = 0;
                   }
-              if (invert == 21 && sendEvent21 == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
+              if (invert == 21 && sendEvent[21] == 1 && rxEvent[1] == 1 && rxEvent[2] == 1){    
                  cbus.sendOffEvent(true, logicEventNumber21);
-                  sendEvent21 = 0;
+                  sendEvent[21] = 0;
                   }
                   
-           else if (invert != 21 && sendEvent21 == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
+           else if (invert != 21 && sendEvent[21] == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
                     cbus.sendOffEvent(true, logicEventNumber21);
-                    sendEvent21 = 1; 
+                    sendEvent[21] = 1; 
                     }
-              else if (invert == 21 && sendEvent21 == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
+              else if (invert == 21 && sendEvent[21] == 0 && (rxEvent[1] == 0 || rxEvent[2] == 0)) {
                       cbus.sendOnEvent(true, logicEventNumber21);
-                      sendEvent21 = 1; 
+                      sendEvent[21] = 1; 
                     }
             }
 /********************************************************************************************/
