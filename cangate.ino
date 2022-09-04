@@ -242,38 +242,38 @@ int invert; // used to invert output event
    bool rxEvent[70] = 0;    
    bool rxEvent[71] = 0;     
    bool rxEvent[72] = 0;     
-   bool rxEvent73 = 0;      
-   bool rxEvent74 = 0;    
-   bool rxEvent75 = 0;     
-   bool rxEvent76 = 0;   
-   bool rxEvent77 = 0;       
-   bool rxEvent78 = 0;     
-   bool rxEvent79 = 0;      
-   bool rxEvent80 = 0;    
-   bool rxEvent81 = 0;    
-   bool rxEvent82 = 0;     
-   bool rxEvent83 = 0;    
-   bool rxEvent84 = 0;    
-   bool rxEvent85 = 0;    
-   bool rxEvent86 = 0;    
-   bool rxEvent87 = 0;    
-   bool rxEvent88 = 0;     
-   bool rxEvent89 = 0;    
-   bool rxEvent90 = 0;     
-   bool rxEvent91 = 0;      
-   bool rxEvent92 = 0;  
-   bool rxEvent93 = 0;      
-   bool rxEvent94 = 0;  
-   bool rxEvent95 = 0;      
-   bool rxEvent96 = 0;      
-   bool rxEvent97 = 0;       
-   bool rxEvent98 = 0;      
-   bool rxEvent99 = 0;    
-   bool rxEvent100 = 0;  
-   bool rxEvent101 = 0; 
-   bool rxEvent102 = 0;  
-   bool rxEvent103 = 0;   
-   bool rxEvent104 = 0;      
+   bool rxEvent[73] = 0;      
+   bool rxEvent[74] = 0;    
+   bool rxEvent[75] = 0;     
+   bool rxEvent[76] = 0;   
+   bool rxEvent[77] = 0;       
+   bool rxEvent[78] = 0;     
+   bool rxEvent[79] = 0;      
+   bool rxEvent[80] = 0;    
+   bool rxEvent[81] = 0;    
+   bool rxEvent[82] = 0;     
+   bool rxEvent[83] = 0;    
+   bool rxEvent[84] = 0;    
+   bool rxEvent[85] = 0;    
+   bool rxEvent[86] = 0;    
+   bool rxEvent[87] = 0;    
+   bool rxEvent[88] = 0;     
+   bool rxEvent[89] = 0;    
+   bool rxEvent[90] = 0;     
+   bool rxEvent[91] = 0;      
+   bool rxEvent[92] = 0;  
+   bool rxEvent[93] = 0;      
+   bool rxEvent[94] = 0;  
+   bool rxEvent[95] = 0;      
+   bool rxEvent[96] = 0;      
+   bool rxEvent[97] = 0;       
+   bool rxEvent[98] = 0;      
+   bool rxEvent[99] = 0;    
+   bool rxEvent[100] = 0;  
+   bool rxEvent[101] = 0; 
+   bool rxEvent[102] = 0;  
+   bool rxEvent[103] = 0;   
+   bool rxEvent[104] = 0;      
 */
 
 
@@ -970,258 +970,258 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                        break;
 			  case 73: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent73 = 1; 
+                        rxEvent[73] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent73 = 0;   
+                        rxEvent[73] = 0;   
                        }
                        break;
 			  case 74: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent74 = 1; 
+                        rxEvent[74] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent74 = 0;   
+                        rxEvent[74] = 0;   
                        }
                        break;
            	  case 75: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent75 = 1; 
+                        rxEvent[75] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent75 = 0;   
+                        rxEvent[75] = 0;   
                        }
                        break;
 			  case 76:
                      if (mcbus->isAccOn()== true){
-                        rxEvent76 = 1; 
+                        rxEvent[76] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent76 = 0;   
+                        rxEvent[76] = 0;   
                        }
                        break;
 			  case 77:
                      if (mcbus->isAccOn()== true){
-                        rxEvent77 = 1; 
+                        rxEvent[77] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent77 = 0;   
+                        rxEvent[77] = 0;   
                        }
                        break;
 			  case 78: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent78 = 1; 
+                        rxEvent[78] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent78 = 0;   
+                        rxEvent[78] = 0;   
                        }
                        break;
 			  case 79: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent79 = 1; 
+                        rxEvent[79] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent79 = 0;   
+                        rxEvent[79] = 0;   
                        }
                        break;
 			  case 80: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent80 = 1; 
+                        rxEvent[80] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent80 = 0;   
+                        rxEvent[80] = 0;   
                        }
                        break;
 			  case 81: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent81 = 1; 
+                        rxEvent[81] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent81 = 0;   
+                        rxEvent[81] = 0;   
                        }
                        break;
 			  case 82: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent82 = 1; 
+                        rxEvent[82] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent82 = 0;   
+                        rxEvent[82] = 0;   
                        }
                        break;
 			  case 83: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent83 = 1; 
+                        rxEvent[83] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent83 = 0;   
+                        rxEvent[83] = 0;   
                        }
                        break;
 			  case 84: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent84 = 1; 
+                        rxEvent[84] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent84 = 0;   
+                        rxEvent[84] = 0;   
                        }
                        break;
 			  case 85: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent85 = 1; 
+                        rxEvent[85] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent85 = 0;   
+                        rxEvent[85] = 0;   
                        }
                        break;
 			  case 86: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent86 = 1; 
+                        rxEvent[86] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent86 = 0;   
+                        rxEvent[86] = 0;   
                        }
                        break;
 			  case 87: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent87 = 1; 
+                        rxEvent[87] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent87 = 0;   
+                        rxEvent[87] = 0;   
                        }
                        break;
 			  case 88: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent88 = 1; 
+                        rxEvent[88] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent88 = 0;   
+                        rxEvent[88] = 0;   
                        }
                        break;
 			  case 89: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent89 = 1; 
+                        rxEvent[89] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent89 = 0;   
+                        rxEvent[89] = 0;   
                        }
                        break;
 			  case 90: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent90 = 1; 
+                        rxEvent[90] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent90 = 0;   
+                        rxEvent[90] = 0;   
                        }
                        break;
 			  case 91:
                      if (mcbus->isAccOn()== true){
-                        rxEvent91 = 1; 
+                        rxEvent[91] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent91 = 0;   
+                        rxEvent[91] = 0;   
                        }
                        break;
 			  case 92: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent92 = 1; 
+                        rxEvent[92] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent92 = 0;   
+                        rxEvent[92] = 0;   
                        }
                        break;
 			  case 93: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent93 = 1; 
+                        rxEvent[93] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent93 = 0;   
+                        rxEvent[93] = 0;   
                        }
                        break;
 			  case 94:
                      if (mcbus->isAccOn()== true){
-                        rxEvent94 = 1; 
+                        rxEvent[94] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent94 = 0;   
+                        rxEvent[94] = 0;   
                        }
                        break;
 			  case 95: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent95 = 1; 
+                        rxEvent[95] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent95 = 0;   
+                        rxEvent[95] = 0;   
                        }
                        break;
 			  case 96: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent96 = 1; 
+                        rxEvent[96] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent96 = 0;   
+                        rxEvent[96] = 0;   
                        }
                        break;
 			  case 97: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent97 = 1; 
+                        rxEvent[97] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent97 = 0;   
+                        rxEvent[97] = 0;   
                        }
                        break;
 			  case 98: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent98 = 1; 
+                        rxEvent[98] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent98 = 0;   
+                        rxEvent[98] = 0;   
                        }
                        break;
 			  case 99: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent99 = 1; 
+                        rxEvent[99] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent99 = 0;   
+                        rxEvent[99] = 0;   
                        }
                        break;
 			 case 100: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent100 = 1; 
+                        rxEvent[100] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent100 = 0;   
+                        rxEvent[100] = 0;   
                        }
                        break;
 			 case 101: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent101 = 1; 
+                        rxEvent[101] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent101 = 0;   
+                        rxEvent[101] = 0;   
                        }
                        break;
 			 case 102: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent102 = 1; 
+                        rxEvent[102] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent102 = 0;   
+                        rxEvent[102] = 0;   
                        }
                        break;
 			 case 103: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent103 = 1; 
+                        rxEvent[103] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent103 = 0;   
+                        rxEvent[103] = 0;   
                        }
                        break;
 		     case 104: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent104 = 1; 
+                        rxEvent[104] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent104 = 0;   
+                        rxEvent[104] = 0;   
                        }
                        break;
 					   
@@ -1909,20 +1909,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 51){
-             if (invert != 51 && sendEvent51 == 1 && (rxEvent73 == 1 || rxEvent74 == 1 || rxEvent75 == 1 || rxEvent76 == 1)){
+             if (invert != 51 && sendEvent51 == 1 && (rxEvent[73] == 1 || rxEvent[74] == 1 || rxEvent[75] == 1 || rxEvent[76] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber51);
                   sendEvent51 = 0;
                   }
-                if (invert == 51 && sendEvent51 == 1 && (rxEvent73 == 1 || rxEvent74 == 1 || rxEvent75 == 1 || rxEvent76 == 1)){
+                if (invert == 51 && sendEvent51 == 1 && (rxEvent[73] == 1 || rxEvent[74] == 1 || rxEvent[75] == 1 || rxEvent[76] == 1)){
                  cbus.sendOffEvent(true, logicEventNumber51);
                   sendEvent51 = 0;
                  }
                  
-                  else if (invert != 51 && sendEvent51 == 0 && rxEvent73 == 0 && rxEvent74 == 0 && rxEvent75 == 0 && rxEvent76 == 0){
+                  else if (invert != 51 && sendEvent51 == 0 && rxEvent[73] == 0 && rxEvent[74] == 0 && rxEvent[75] == 0 && rxEvent[76] == 0){
                             cbus.sendOffEvent(true, logicEventNumber51);
                               sendEvent51 = 1; 
                  } 
-                 else if (invert == 51 && sendEvent51 == 0 && rxEvent73 == 0 && rxEvent74 == 0 && rxEvent75 == 0 && rxEvent76 == 0){
+                 else if (invert == 51 && sendEvent51 == 0 && rxEvent[73] == 0 && rxEvent[74] == 0 && rxEvent[75] == 0 && rxEvent[76] == 0){
                             cbus.sendOnEvent(true, logicEventNumber51);
                               sendEvent51 = 1; 
                  } 
@@ -1936,20 +1936,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 4 Input OR Gate 2
 /********************************************************************************************/
           if  (eventVariable2 == 52){
-             if (invert != 52 && sendEvent52 == 1 && (rxEvent77 == 1 || rxEvent78 == 1 || rxEvent79 == 1 || rxEvent80 == 1)){
+             if (invert != 52 && sendEvent52 == 1 && (rxEvent[77] == 1 || rxEvent[78] == 1 || rxEvent[79] == 1 || rxEvent[80] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber52);
                   sendEvent52 = 0;
                   }
-                if (invert == 52 && sendEvent52 == 1 && (rxEvent77 == 1 || rxEvent78 == 1 || rxEvent79 == 1 || rxEvent80 == 1)){
+                if (invert == 52 && sendEvent52 == 1 && (rxEvent[77] == 1 || rxEvent[78] == 1 || rxEvent[79] == 1 || rxEvent[80] == 1)){
                  cbus.sendOffEvent(true, logicEventNumber52);
                   sendEvent52 = 0;
                  }
                  
-                  else if (invert != 52 && sendEvent52 == 0 && rxEvent77 == 0 && rxEvent78 == 0 && rxEvent79 == 0 && rxEvent80 == 0){
+                  else if (invert != 52 && sendEvent52 == 0 && rxEvent[77] == 0 && rxEvent[78] == 0 && rxEvent[79] == 0 && rxEvent[80] == 0){
                             cbus.sendOffEvent(true, logicEventNumber52);
                               sendEvent51 = 1; 
                  } 
-                 else if (invert == 52 && sendEvent52 == 0 && rxEvent77 == 0 && rxEvent78 == 0 && rxEvent79 == 0 && rxEvent80 == 0){
+                 else if (invert == 52 && sendEvent52 == 0 && rxEvent[77] == 0 && rxEvent[78] == 0 && rxEvent[79] == 0 && rxEvent[80] == 0){
                             cbus.sendOnEvent(true, logicEventNumber52);
                               sendEvent52 = 1; 
                  } 
@@ -1962,20 +1962,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
            if  (eventVariable2 == 53){
-             if (invert != 53 && sendEvent53 == 1 && (rxEvent81 == 1 || rxEvent82 == 1 || rxEvent83 == 1 || rxEvent84 == 1)){
+             if (invert != 53 && sendEvent53 == 1 && (rxEvent[81] == 1 || rxEvent[82] == 1 || rxEvent[83] == 1 || rxEvent[84] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber53);
                   sendEvent53 = 0;
                   }
-                if (invert == 53 && sendEvent53 == 1 && (rxEvent81 == 1 || rxEvent82 == 1 || rxEvent83 == 1 || rxEvent84 == 1)){
+                if (invert == 53 && sendEvent53 == 1 && (rxEvent[81] == 1 || rxEvent[82] == 1 || rxEvent[83] == 1 || rxEvent[84] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber53);
                       sendEvent53 = 0;
                  }
                  
-                  else if (invert != 53 && sendEvent53 == 0 && rxEvent81 == 0 && rxEvent82 == 0 && rxEvent83 == 0 && rxEvent84 == 0){
+                  else if (invert != 53 && sendEvent53 == 0 && rxEvent[81] == 0 && rxEvent[82] == 0 && rxEvent[83] == 0 && rxEvent[84] == 0){
                             cbus.sendOffEvent(true, logicEventNumber53);
                               sendEvent53 = 1; 
                  } 
-                    else if (invert == 53 && sendEvent53 == 0 && rxEvent81 == 0 && rxEvent82 == 0 && rxEvent83 == 0 && rxEvent84 == 0){
+                    else if (invert == 53 && sendEvent53 == 0 && rxEvent[81] == 0 && rxEvent[82] == 0 && rxEvent[83] == 0 && rxEvent[84] == 0){
                             cbus.sendOnEvent(true, logicEventNumber53);
                               sendEvent53 = 1; 
                  } 
@@ -1989,20 +1989,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
    if  (eventVariable2 == 54){
-             if (invert != 54 && sendEvent54 == 1 && (rxEvent85 == 1 || rxEvent86 == 1 || rxEvent87 == 1 || rxEvent88 == 1)){
+             if (invert != 54 && sendEvent54 == 1 && (rxEvent[85] == 1 || rxEvent[86] == 1 || rxEvent[87] == 1 || rxEvent[88] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber54);
                   sendEvent54 = 0;
                   }
-                if (invert == 54 && sendEvent54 == 1 && (rxEvent85 == 1 || rxEvent86 == 1 || rxEvent87 == 1 || rxEvent88 == 1)){
+                if (invert == 54 && sendEvent54 == 1 && (rxEvent[85] == 1 || rxEvent[86] == 1 || rxEvent[87] == 1 || rxEvent[88] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber54);
                       sendEvent54 = 0;
                  }
                  
-                  else if (invert != 54 && sendEvent54 == 0 && rxEvent85 == 0 && rxEvent86 == 0 && rxEvent87 == 0 && rxEvent88 == 0){
+                  else if (invert != 54 && sendEvent54 == 0 && rxEvent[85] == 0 && rxEvent[86] == 0 && rxEvent[87] == 0 && rxEvent[88] == 0){
                             cbus.sendOffEvent(true, logicEventNumber54);
                               sendEvent54 = 1; 
                  } 
-                    else if (invert == 54 && sendEvent54 == 0 && rxEvent85 == 0 && rxEvent86 == 0 && rxEvent87 == 0 && rxEvent88 == 0){
+                    else if (invert == 54 && sendEvent54 == 0 && rxEvent[85] == 0 && rxEvent[86] == 0 && rxEvent[87] == 0 && rxEvent[88] == 0){
                             cbus.sendOnEvent(true, logicEventNumber54);
                               sendEvent54 = 1; 
                  } 
@@ -2016,20 +2016,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 4 Input OR Gate 5
 /********************************************************************************************/
           if  (eventVariable2 == 55){
-             if (invert != 55 && sendEvent55 == 1 && (rxEvent89 == 1 || rxEvent90 == 1 || rxEvent91 == 1 || rxEvent92 == 1)){
+             if (invert != 55 && sendEvent55 == 1 && (rxEvent[89] == 1 || rxEvent[90] == 1 || rxEvent[91] == 1 || rxEvent[92] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber55);
                   sendEvent55 = 0;
                   }
-                if (invert == 55 && sendEvent55 == 1 && (rxEvent89 == 1 || rxEvent90 == 1 || rxEvent91 == 1 || rxEvent92 == 1)){
+                if (invert == 55 && sendEvent55 == 1 && (rxEvent[89] == 1 || rxEvent[90] == 1 || rxEvent[91] == 1 || rxEvent[92] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber55);
                       sendEvent55 = 0;
                  }
                  
-                  else if (invert != 55 && sendEvent55 == 0 && rxEvent89 == 0 && rxEvent90 == 0 && rxEvent91 == 0 && rxEvent92 == 0){
+                  else if (invert != 55 && sendEvent55 == 0 && rxEvent[89] == 0 && rxEvent[90] == 0 && rxEvent[91] == 0 && rxEvent[92] == 0){
                             cbus.sendOffEvent(true, logicEventNumber55);
                               sendEvent55 = 1; 
                  } 
-                    else if (invert == 55 && sendEvent55 == 0 && rxEvent89 == 0 && rxEvent90 == 0 && rxEvent91 == 0 && rxEvent92 == 0){
+                    else if (invert == 55 && sendEvent55 == 0 && rxEvent[89] == 0 && rxEvent[90] == 0 && rxEvent[91] == 0 && rxEvent[92] == 0){
                             cbus.sendOnEvent(true, logicEventNumber55);
                               sendEvent55 = 1; 
                  } 
@@ -2041,20 +2041,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 4 Input OR Gate 6
 /********************************************************************************************/
            if  (eventVariable2 == 56){
-             if (invert != 56 && sendEvent56 == 1 && (rxEvent93 == 1 || rxEvent94 == 1 || rxEvent95 == 1 || rxEvent96 == 1)){
+             if (invert != 56 && sendEvent56 == 1 && (rxEvent[93] == 1 || rxEvent[94] == 1 || rxEvent[95] == 1 || rxEvent[96] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber56);
                   sendEvent56 = 0;
                   }
-                if (invert == 56 && sendEvent56 == 1 && (rxEvent93 == 1 || rxEvent94 == 1 || rxEvent95 == 1 || rxEvent96 == 1)){
+                if (invert == 56 && sendEvent56 == 1 && (rxEvent[93] == 1 || rxEvent[94] == 1 || rxEvent[95] == 1 || rxEvent[96] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber56);
                       sendEvent56 = 0;
                  }
                  
-                  else if (invert != 56 && sendEvent56 == 0 && rxEvent93 == 0 && rxEvent94 == 0 && rxEvent95 == 0 && rxEvent96 == 0){
+                  else if (invert != 56 && sendEvent56 == 0 && rxEvent[93] == 0 && rxEvent[94] == 0 && rxEvent[95] == 0 && rxEvent[96] == 0){
                             cbus.sendOffEvent(true, logicEventNumber56);
                               sendEvent56 = 1; 
                  } 
-                    else if (invert == 56 && sendEvent56 == 0 && rxEvent93 == 0 && rxEvent94 == 0 && rxEvent95 == 0 && rxEvent96 == 0){
+                    else if (invert == 56 && sendEvent56 == 0 && rxEvent[93] == 0 && rxEvent[94] == 0 && rxEvent[95] == 0 && rxEvent[96] == 0){
                             cbus.sendOnEvent(true, logicEventNumber56);
                               sendEvent56 = 1; 
                  } 
@@ -2068,20 +2068,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
             if  (eventVariable2 == 57){
-             if (invert != 57 && sendEvent57 == 1 && (rxEvent97 == 1 || rxEvent98 == 1 || rxEvent99 == 1 || rxEvent100 == 1)){
+             if (invert != 57 && sendEvent57 == 1 && (rxEvent[97] == 1 || rxEvent[98] == 1 || rxEvent[99] == 1 || rxEvent[100] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber57);
                   sendEvent57 = 0;
                   }
-                if (invert == 57 && sendEvent57 == 1 && (rxEvent97 == 1 || rxEvent98 == 1 || rxEvent99 == 1 || rxEvent100 == 1)){
+                if (invert == 57 && sendEvent57 == 1 && (rxEvent[97] == 1 || rxEvent[98] == 1 || rxEvent[99] == 1 || rxEvent[100] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber57);
                       sendEvent57 = 0;
                  }
                  
-                  else if (invert != 57 && sendEvent57 == 0 && rxEvent97 == 0 && rxEvent98 == 0 && rxEvent99 == 0 && rxEvent100 == 0){
+                  else if (invert != 57 && sendEvent57 == 0 && rxEvent[97] == 0 && rxEvent[98] == 0 && rxEvent[99] == 0 && rxEvent[100] == 0){
                             cbus.sendOffEvent(true, logicEventNumber57);
                               sendEvent57 = 1; 
                  } 
-                    else if (invert == 57 && sendEvent57 == 0 && rxEvent97 == 0 && rxEvent98 == 0 && rxEvent99 == 0 && rxEvent100 == 0){
+                    else if (invert == 57 && sendEvent57 == 0 && rxEvent[97] == 0 && rxEvent[98] == 0 && rxEvent[99] == 0 && rxEvent[100] == 0){
                             cbus.sendOnEvent(true, logicEventNumber57);
                               sendEvent57 = 1; 
                  } 
@@ -2094,20 +2094,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 4 Input OR Gate 8
 /********************************************************************************************/
            if  (eventVariable2 == 58){
-             if (invert != 58 && sendEvent58 == 1 && (rxEvent101 == 1 || rxEvent102 == 1 || rxEvent102 == 1 || rxEvent104 == 1)){
+             if (invert != 58 && sendEvent58 == 1 && (rxEvent[101] == 1 || rxEvent[102] == 1 || rxEvent[103] == 1 || rxEvent[104] == 1)){
                  cbus.sendOnEvent(true, logicEventNumber58);
                   sendEvent58 = 0;
                   }
-                if (invert == 58 && sendEvent58 == 1 && (rxEvent101 == 1 || rxEvent102 == 1 || rxEvent103 == 1 || rxEvent104 == 1)){
+                if (invert == 58 && sendEvent58 == 1 && (rxEvent[101] == 1 || rxEvent[102] == 1 || rxEvent[103] == 1 || rxEvent[104] == 1)){
                     cbus.sendOffEvent(true, logicEventNumber58);
                       sendEvent58 = 0;
                  }
                  
-                  else if (invert != 58 && sendEvent58 == 0 && rxEvent101 == 0 && rxEvent102 == 0 && rxEvent103 == 0 && rxEvent104 == 0){
+                  else if (invert != 58 && sendEvent58 == 0 && rxEvent[101] == 0 && rxEvent[102] == 0 && rxEvent[103] == 0 && rxEvent[104] == 0){
                             cbus.sendOffEvent(true, logicEventNumber58);
                               sendEvent58 = 1; 
                  } 
-                    else if (invert == 58 && sendEvent58 == 0 && rxEvent101 == 0 && rxEvent102 == 0 && rxEvent102 == 0 && rxEvent104 == 0){
+                    else if (invert == 58 && sendEvent58 == 0 && rxEvent[101] == 0 && rxEvent[102] == 0 && rxEvent[103] == 0 && rxEvent[104] == 0){
                             cbus.sendOnEvent(true, logicEventNumber58);
                               sendEvent58 = 1; 
                  } 
