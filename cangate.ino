@@ -525,230 +525,49 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 4 Input OR Gate 1
 /********************************************************************************************/
         if (eventVariable2 == 51) fourInputOrGate(51,73,74,75,76);
-/*
-          if  (eventVariable2 == 51){
-             if (invert != 51 && sendEvent51 == 1 && (rxEvent[73] == 1 || rxEvent[74] == 1 || rxEvent[75] == 1 || rxEvent[76] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber51);
-                  sendEvent51 = 0;
-                  }
-                if (invert == 51 && sendEvent51 == 1 && (rxEvent[73] == 1 || rxEvent[74] == 1 || rxEvent[75] == 1 || rxEvent[76] == 1)){
-                 cbus.sendOffEvent(true, logicEventNumber51);
-                  sendEvent51 = 0;
-                 }
-                 
-                  else if (invert != 51 && sendEvent51 == 0 && rxEvent[73] == 0 && rxEvent[74] == 0 && rxEvent[75] == 0 && rxEvent[76] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber51);
-                              sendEvent51 = 1; 
-                 } 
-                 else if (invert == 51 && sendEvent51 == 0 && rxEvent[73] == 0 && rxEvent[74] == 0 && rxEvent[75] == 0 && rxEvent[76] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber51);
-                              sendEvent51 = 1; 
-                 } 
-              }
-  */    
 /********************************************************************************************/
-
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 2
 /********************************************************************************************/
         if (eventVariable2 == 52) fourInputOrGate(52,77,78,79,80);
-/*          if  (eventVariable2 == 52){
-             if (invert != 52 && sendEvent52 == 1 && (rxEvent[77] == 1 || rxEvent[78] == 1 || rxEvent[79] == 1 || rxEvent[80] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber52);
-                  sendEvent52 = 0;
-                  }
-                if (invert == 52 && sendEvent52 == 1 && (rxEvent[77] == 1 || rxEvent[78] == 1 || rxEvent[79] == 1 || rxEvent[80] == 1)){
-                 cbus.sendOffEvent(true, logicEventNumber52);
-                  sendEvent52 = 0;
-                 }
-                 
-                  else if (invert != 52 && sendEvent52 == 0 && rxEvent[77] == 0 && rxEvent[78] == 0 && rxEvent[79] == 0 && rxEvent[80] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber52);
-                              sendEvent51 = 1; 
-                 } 
-                 else if (invert == 52 && sendEvent52 == 0 && rxEvent[77] == 0 && rxEvent[78] == 0 && rxEvent[79] == 0 && rxEvent[80] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber52);
-                              sendEvent52 = 1; 
-                 } 
-              } */
 /********************************************************************************************/
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 3
 /********************************************************************************************/
         if (eventVariable2 == 53) fourInputOrGate(53,81,82,83,84);
-/*
-           if  (eventVariable2 == 53){
-             if (invert != 53 && sendEvent53 == 1 && (rxEvent[81] == 1 || rxEvent[82] == 1 || rxEvent[83] == 1 || rxEvent[84] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber53);
-                  sendEvent53 = 0;
-                  }
-                if (invert == 53 && sendEvent53 == 1 && (rxEvent[81] == 1 || rxEvent[82] == 1 || rxEvent[83] == 1 || rxEvent[84] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber53);
-                      sendEvent53 = 0;
-                 }
-                 
-                  else if (invert != 53 && sendEvent53 == 0 && rxEvent[81] == 0 && rxEvent[82] == 0 && rxEvent[83] == 0 && rxEvent[84] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber53);
-                              sendEvent53 = 1; 
-                 } 
-                    else if (invert == 53 && sendEvent53 == 0 && rxEvent[81] == 0 && rxEvent[82] == 0 && rxEvent[83] == 0 && rxEvent[84] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber53);
-                              sendEvent53 = 1; 
-                 } 
-              }
-*/
 /********************************************************************************************/
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 4
 /********************************************************************************************/
         if (eventVariable2 == 54) fourInputOrGate(54,85,86,87,88);
-/*
-   if  (eventVariable2 == 54){
-             if (invert != 54 && sendEvent54 == 1 && (rxEvent[85] == 1 || rxEvent[86] == 1 || rxEvent[87] == 1 || rxEvent[88] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber54);
-                  sendEvent54 = 0;
-                  }
-                if (invert == 54 && sendEvent54 == 1 && (rxEvent[85] == 1 || rxEvent[86] == 1 || rxEvent[87] == 1 || rxEvent[88] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber54);
-                      sendEvent54 = 0;
-                 }
-                 
-                  else if (invert != 54 && sendEvent54 == 0 && rxEvent[85] == 0 && rxEvent[86] == 0 && rxEvent[87] == 0 && rxEvent[88] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber54);
-                              sendEvent54 = 1; 
-                 } 
-                    else if (invert == 54 && sendEvent54 == 0 && rxEvent[85] == 0 && rxEvent[86] == 0 && rxEvent[87] == 0 && rxEvent[88] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber54);
-                              sendEvent54 = 1; 
-                 } 
-              }
-*/
 /********************************************************************************************/
-
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 5
 /********************************************************************************************/
         if (eventVariable2 == 55) fourInputOrGate(55,89,90,91,92);
-/*          if  (eventVariable2 == 55){
-             if (invert != 55 && sendEvent55 == 1 && (rxEvent[89] == 1 || rxEvent[90] == 1 || rxEvent[91] == 1 || rxEvent[92] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber55);
-                  sendEvent55 = 0;
-                  }
-                if (invert == 55 && sendEvent55 == 1 && (rxEvent[89] == 1 || rxEvent[90] == 1 || rxEvent[91] == 1 || rxEvent[92] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber55);
-                      sendEvent55 = 0;
-                 }
-                 
-                  else if (invert != 55 && sendEvent55 == 0 && rxEvent[89] == 0 && rxEvent[90] == 0 && rxEvent[91] == 0 && rxEvent[92] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber55);
-                              sendEvent55 = 1; 
-                 } 
-                    else if (invert == 55 && sendEvent55 == 0 && rxEvent[89] == 0 && rxEvent[90] == 0 && rxEvent[91] == 0 && rxEvent[92] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber55);
-                              sendEvent55 = 1; 
-                 } 
-              } */
 /********************************************************************************************/
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 6
 /********************************************************************************************/
         if (eventVariable2 == 56) fourInputOrGate(56,93,94,95,96);
-/*           if  (eventVariable2 == 56){
-             if (invert != 56 && sendEvent56 == 1 && (rxEvent[93] == 1 || rxEvent[94] == 1 || rxEvent[95] == 1 || rxEvent[96] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber56);
-                  sendEvent56 = 0;
-                  }
-                if (invert == 56 && sendEvent56 == 1 && (rxEvent[93] == 1 || rxEvent[94] == 1 || rxEvent[95] == 1 || rxEvent[96] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber56);
-                      sendEvent56 = 0;
-                 }
-                 
-                  else if (invert != 56 && sendEvent56 == 0 && rxEvent[93] == 0 && rxEvent[94] == 0 && rxEvent[95] == 0 && rxEvent[96] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber56);
-                              sendEvent56 = 1; 
-                 } 
-                    else if (invert == 56 && sendEvent56 == 0 && rxEvent[93] == 0 && rxEvent[94] == 0 && rxEvent[95] == 0 && rxEvent[96] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber56);
-                              sendEvent56 = 1; 
-                 } 
-              }
-*/
 /********************************************************************************************/
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 7
 /********************************************************************************************/
         if (eventVariable2 == 57) fourInputOrGate(57,97,98,99,100);
-/*
-            if  (eventVariable2 == 57){
-             if (invert != 57 && sendEvent57 == 1 && (rxEvent[97] == 1 || rxEvent[98] == 1 || rxEvent[99] == 1 || rxEvent[100] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber57);
-                  sendEvent57 = 0;
-                  }
-                if (invert == 57 && sendEvent57 == 1 && (rxEvent[97] == 1 || rxEvent[98] == 1 || rxEvent[99] == 1 || rxEvent[100] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber57);
-                      sendEvent57 = 0;
-                 }
-                 
-                  else if (invert != 57 && sendEvent57 == 0 && rxEvent[97] == 0 && rxEvent[98] == 0 && rxEvent[99] == 0 && rxEvent[100] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber57);
-                              sendEvent57 = 1; 
-                 } 
-                    else if (invert == 57 && sendEvent57 == 0 && rxEvent[97] == 0 && rxEvent[98] == 0 && rxEvent[99] == 0 && rxEvent[100] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber57);
-                              sendEvent57 = 1; 
-                 } 
-              }
-*/
 /********************************************************************************************/
-
 
 /********************************************************************************************/
 // 4 Input OR Gate 8
 /********************************************************************************************/
           if (eventVariable2 == 58) fourInputOrGate(58,101,102,103,104);
-/*         if  (eventVariable2 == 58){
-             if (invert != 58 && sendEvent58 == 1 && (rxEvent[101] == 1 || rxEvent[102] == 1 || rxEvent[103] == 1 || rxEvent[104] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber58);
-                  sendEvent58 = 0;
-                  }
-                if (invert == 58 && sendEvent58 == 1 && (rxEvent[101] == 1 || rxEvent[102] == 1 || rxEvent[103] == 1 || rxEvent[104] == 1)){
-                    cbus.sendOffEvent(true, logicEventNumber58);
-                      sendEvent58 = 0;
-                 }
-                 
-                  else if (invert != 58 && sendEvent58 == 0 && rxEvent[101] == 0 && rxEvent[102] == 0 && rxEvent[103] == 0 && rxEvent[104] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber58);
-                              sendEvent58 = 1; 
-                 } 
-                    else if (invert == 58 && sendEvent58 == 0 && rxEvent[101] == 0 && rxEvent[102] == 0 && rxEvent[103] == 0 && rxEvent[104] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber58);
-                              sendEvent58 = 1; 
-                 } 
-              }
-*/
 /********************************************************************************************/
-
-
-
-
-
-
-
-
-
-
 
 
         } // End OF Recieved Events
