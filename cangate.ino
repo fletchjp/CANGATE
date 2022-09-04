@@ -182,25 +182,25 @@ int invert; // used to invert output event
    bool rxEvent10 = 0;      
    bool rxEvent11 = 0;     
    bool rxEvent12 = 0;    
-   bool rxEvent13 = 0;      
-   bool rxEvent14 = 0;     
-   bool rxEvent15 = 0;    
-   bool rxEvent16 = 0;      
-   bool rxEvent17 = 0;       
-   bool rxEvent18 = 0;      
-   bool rxEvent19 = 0;      
-   bool rxEvent20 = 0;     
-   bool rxEvent21 = 0;    
-   bool rxEvent22 = 0;     
-   bool rxEvent23 = 0;    
-   bool rxEvent24 = 0;       
-   bool rxEvent25 = 0;      
-   bool rxEvent26 = 0;      
-   bool rxEvent27 = 0;    
-   bool rxEvent28 = 0;     
-   bool rxEvent29 = 0;     
-   bool rxEvent30 = 0;     
-   bool rxEvent31 = 0;    
+   bool rxEvent[13] = 0;      
+   bool rxEvent[14] = 0;     
+   bool rxEvent[15] = 0;    
+   bool rxEvent[16] = 0;      
+   bool rxEvent[17] = 0;       
+   bool rxEvent[18] = 0;      
+   bool rxEvent[19] = 0;      
+   bool rxEvent[20] = 0;     
+   bool rxEvent[21] = 0;    
+   bool rxEvent[22] = 0;     
+   bool rxEvent[23] = 0;    
+   bool rxEvent[24] = 0;       
+   bool rxEvent[25] = 0;      
+   bool rxEvent[26] = 0;      
+   bool rxEvent[27] = 0;    
+   bool rxEvent[28] = 0;     
+   bool rxEvent[29] = 0;     
+   bool rxEvent[30] = 0;     
+   bool rxEvent[31] = 0;    
    bool rxEvent32 = 0;    
    bool rxEvent33 = 0;      
    bool rxEvent34 = 0;      
@@ -490,154 +490,154 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                        break;
               case 13: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent13 = 1; 
+                        rxEvent[13] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent13 = 0;   
+                        rxEvent[13] = 0;   
                        }
                        break;
               case 14: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent14 = 1; 
+                        rxEvent[14] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent14 = 0;   
+                        rxEvent[14] = 0;   
                        }
                        break;
               case 15: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent15 = 1; 
+                        rxEvent[15] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent15 = 0;   
+                        rxEvent[15] = 0;   
                        }
                        break;
               case 16: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent16 = 1; 
+                        rxEvent[16] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent16 = 0;   
+                        rxEvent[16] = 0;   
                        }
                        break;
               case 17: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent17 = 1; 
+                        rxEvent[17] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent17 = 0;   
+                        rxEvent[17] = 0;   
                        }
                        break;
               case 18:
                      if (mcbus->isAccOn()== true){
-                        rxEvent18 = 1; 
+                        rxEvent[18] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent18 = 0;   
+                        rxEvent[18] = 0;   
                        }
                        break;
               case 19: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent19 = 1; 
+                        rxEvent[19] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent19 = 0;   
+                        rxEvent[19] = 0;   
                        }
                        break;
               case 20: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent20 = 1; 
+                        rxEvent[20] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent20 = 0;   
+                        rxEvent[20] = 0;   
                        }
                        break;
 			  case 21: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent21 = 1; 
+                        rxEvent[21] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent21 = 0;   
+                        rxEvent[21] = 0;   
                        }
                        break;
 			  case 22: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent22 = 1; 
+                        rxEvent[22] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent22 = 0;   
+                        rxEvent[22] = 0;   
                        }
                        break;
 			  case 23: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent23 = 1; 
+                        rxEvent[23] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent23 = 0;   
+                        rxEvent[23] = 0;   
                        }
                        break;
 			  case 24: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent24 = 1; 
+                        rxEvent[24] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent24 = 0;   
+                        rxEvent[24] = 0;   
                        }
                        break;
 		      case 25: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent25 = 1; 
+                        rxEvent[25] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent25 = 0;   
+                        rxEvent[25] = 0;   
                        }
                        break;
 			  case 26: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent26 = 1; 
+                        rxEvent[26] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent26 = 0;   
+                        rxEvent[26] = 0;   
                        }
                        break;
 			  case 27: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent27 = 1; 
+                        rxEvent[27] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent27 = 0;   
+                        rxEvent[27] = 0;   
                        }
                        break;
 			  case 28: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent28 = 1; 
+                        rxEvent[28] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent28 = 0;   
+                        rxEvent[28] = 0;   
                        }
                        break;
 			  case 29: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent29 = 1; 
+                        rxEvent[29] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent29 = 0;   
+                        rxEvent[29] = 0;   
                        }
                        break;
 			  case 30: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent30 = 1; 
+                        rxEvent[30] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent30 = 0;   
+                        rxEvent[30] = 0;   
                        }
                        break;
 			  case 31: 
                      if (mcbus->isAccOn()== true){
-                        rxEvent31 = 1; 
+                        rxEvent[31] = 1; 
                         }
                      else if (mcbus->isAccOff()== true){
-                        rxEvent31 = 0;   
+                        rxEvent[31] = 0;   
                        }
                        break;
 			  case 32: 
@@ -1371,20 +1371,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 6
 /********************************************************************************************/
         if (eventVariable2 == 26){
-         if  (invert != 26 && sendEvent26 == 1 && rxEvent11 == 1 && rxEvent12 == 1){    
+         if  (invert != 26 && sendEvent26 == 1 && rxEvent[11] == 1 && rxEvent[12] == 1){    
               cbus.sendOnEvent(true, logicEventNumber26);
                sendEvent26 = 0;
                   }
-                  if  (invert == 26 && sendEvent26 == 1 && rxEvent11 == 1 && rxEvent12 == 1){    
+                  if  (invert == 26 && sendEvent26 == 1 && rxEvent[11] == 1 && rxEvent[12] == 1){    
                        cbus.sendOffEvent(true, logicEventNumber26);
                         sendEvent26 = 0;
                   }
                   
-               else if (invert != 26 && sendEvent26 == 0 && (rxEvent11 == 0 || rxEvent12 == 0)){
+               else if (invert != 26 && sendEvent26 == 0 && (rxEvent[11] == 0 || rxEvent[12] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber26);
                         sendEvent26 = 1; 
                    }
-                   else if (invert == 26 && sendEvent26 == 0 && (rxEvent11 == 0 || rxEvent12 == 0)){
+                   else if (invert == 26 && sendEvent26 == 0 && (rxEvent[11] == 0 || rxEvent[12] == 0)){
                             cbus.sendOnEvent(true, logicEventNumber26);
                             sendEvent26 = 1; 
                     }
@@ -1397,20 +1397,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 7
 /********************************************************************************************/
         if (eventVariable2 == 27){
-         if (invert != 27 && sendEvent27 == 1 && rxEvent13 == 1 && rxEvent14 == 1){    
+         if (invert != 27 && sendEvent27 == 1 && rxEvent[13] == 1 && rxEvent[14] == 1){    
               cbus.sendOnEvent(true, logicEventNumber27);
                sendEvent27 = 0;
                   }
-                if (invert == 27 && sendEvent27 == 1 && rxEvent13 == 1 && rxEvent14 == 1){    
+                if (invert == 27 && sendEvent27 == 1 && rxEvent[13] == 1 && rxEvent[14] == 1){    
                     cbus.sendOffEvent(true, logicEventNumber27);
                     sendEvent27 = 0;
                   }
                   
-               else if (invert != 27 && sendEvent27 == 0 && (rxEvent13 == 0 || rxEvent14 == 0)){
+               else if (invert != 27 && sendEvent27 == 0 && (rxEvent[13] == 0 || rxEvent[14] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber27);
                         sendEvent27 = 1; 
                     }
-                   else if (invert == 27 && sendEvent27 == 0 && (rxEvent13 == 0 || rxEvent14 == 0)){
+                   else if (invert == 27 && sendEvent27 == 0 && (rxEvent[13] == 0 || rxEvent[14] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber27);
                           sendEvent27 = 1; 
                      }  
@@ -1423,20 +1423,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 // 2 Input AND Gate 8
 /********************************************************************************************/
         if (eventVariable2 == 28){
-         if (invert != 28 && sendEvent28 == 1 && rxEvent15 == 1 && rxEvent16 == 1){    
+         if (invert != 28 && sendEvent28 == 1 && rxEvent[15] == 1 && rxEvent[16] == 1){    
               cbus.sendOnEvent(true, logicEventNumber28);
                sendEvent28 = 0;
                   }
-                   if (invert == 28 && sendEvent28 == 1 && rxEvent15 == 1 && rxEvent16 == 1){    
+                   if (invert == 28 && sendEvent28 == 1 && rxEvent[15] == 1 && rxEvent[16] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber28);
                       sendEvent28 = 0;
                   }
                   
-               else if (invert != 28 && sendEvent28 == 0  && (rxEvent15 == 0 || rxEvent16 == 0)){
+               else if (invert != 28 && sendEvent28 == 0  && (rxEvent[15] == 0 || rxEvent[16] == 0)){
                        cbus.sendOffEvent(true, logicEventNumber28);
                         sendEvent28 = 1; 
                     } 
-                   else if (invert == 28 && sendEvent28 == 0  && (rxEvent15 == 0 || rxEvent16 == 0)){
+                   else if (invert == 28 && sendEvent28 == 0  && (rxEvent[15] == 0 || rxEvent[16] == 0)){
                             cbus.sendOnEvent(true, logicEventNumber28);
                             sendEvent28 = 1; 
                      } 
@@ -1456,20 +1456,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 31){
-              if (invert != 31 && sendEvent31 == 1 && rxEvent17 == 1 && rxEvent18 == 1 && rxEvent19 == 1){    
+              if (invert != 31 && sendEvent31 == 1 && rxEvent[17] == 1 && rxEvent[18] == 1 && rxEvent[19] == 1){    
                     cbus.sendOnEvent(true, logicEventNumber31);
                     sendEvent31 = 0;
                   }
-                   if (invert == 31 && sendEvent31 == 1 && rxEvent17 == 1 && rxEvent18 == 1 && rxEvent19 == 1){    
+                   if (invert == 31 && sendEvent31 == 1 && rxEvent[17] == 1 && rxEvent[18] == 1 && rxEvent[19] == 1){    
                         cbus.sendOffEvent(true, logicEventNumber31);
                         sendEvent31 = 0;
                   } 
                     
-               else if (invert != 31 && sendEvent31 == 0 && (rxEvent17 == 0 || rxEvent18 == 0 || rxEvent19 == 0)) {
+               else if (invert != 31 && sendEvent31 == 0 && (rxEvent[17] == 0 || rxEvent[18] == 0 || rxEvent[19] == 0)) {
                         cbus.sendOffEvent(true, logicEventNumber31);
                         sendEvent31 = 1; 
                   }
-                 else if (invert == 31 && sendEvent31 == 0 && (rxEvent17 == 0 || rxEvent18 == 0 || rxEvent19 == 0)) {
+                 else if (invert == 31 && sendEvent31 == 0 && (rxEvent[17] == 0 || rxEvent[18] == 0 || rxEvent[19] == 0)) {
                           cbus.sendOnEvent(true, logicEventNumber31);
                           sendEvent31 = 1; 
                   }     
@@ -1483,20 +1483,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 32){
-             if (invert != 32 && sendEvent32 == 1 && rxEvent20 == 1 && rxEvent21 == 1 && rxEvent22 == 1){    
+             if (invert != 32 && sendEvent32 == 1 && rxEvent[20] == 1 && rxEvent[21] == 1 && rxEvent[22] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber32);
                 sendEvent32 = 0;
                   }
-                  if (invert == 32 && sendEvent32 == 1 && rxEvent20 == 1 && rxEvent21 == 1 && rxEvent22 == 1){    
+                  if (invert == 32 && sendEvent32 == 1 && rxEvent[20] == 1 && rxEvent[21] == 1 && rxEvent[22] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber32);
                       sendEvent32 = 0;
                   }
                   
-               else if (invert != 32 && sendEvent32 == 0 && (rxEvent20 == 0 || rxEvent21 == 0 || rxEvent22 == 0)){
+               else if (invert != 32 && sendEvent32 == 0 && (rxEvent[20] == 0 || rxEvent[21] == 0 || rxEvent[22] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber32);
                         sendEvent32 = 1; 
                   } 
-                 else if (invert == 32 && sendEvent32 == 0 && (rxEvent20 == 0 || rxEvent21 == 0 || rxEvent22 == 0)){
+                 else if (invert == 32 && sendEvent32 == 0 && (rxEvent[20] == 0 || rxEvent[21] == 0 || rxEvent[22] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber32);
                           sendEvent32 = 1; 
                   } 
@@ -1510,20 +1510,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 33){
-            if (invert != 33 && sendEvent33 == 1 && rxEvent23 == 1 && rxEvent24 == 1 && rxEvent25 == 1){    
+            if (invert != 33 && sendEvent33 == 1 && rxEvent[23] == 1 && rxEvent[24] == 1 && rxEvent[25] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber33);
                 sendEvent33 = 0;
                   }
-                  if (invert == 33 && sendEvent33 == 1 && rxEvent23 == 1 && rxEvent24 == 1 && rxEvent25 == 1){    
+                  if (invert == 33 && sendEvent33 == 1 && rxEvent[23] == 1 && rxEvent[24] == 1 && rxEvent[25] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber33);
                       sendEvent33 = 0;
                   }
                   
-               else if (invert != 33 && sendEvent33 == 0 && (rxEvent23 == 0 || rxEvent24 == 0 || rxEvent25 == 0)){
+               else if (invert != 33 && sendEvent33 == 0 && (rxEvent[23] == 0 || rxEvent[24] == 0 || rxEvent[25] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber33);
                         sendEvent33 = 1; 
                   } 
-                 else if (invert == 33 && sendEvent33 == 0 && (rxEvent23 == 0 || rxEvent24 == 0 || rxEvent25 == 0)){
+                 else if (invert == 33 && sendEvent33 == 0 && (rxEvent[23] == 0 || rxEvent[24] == 0 || rxEvent[25] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber33);
                           sendEvent33 = 1; 
                   } 
@@ -1538,20 +1538,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 34){
-            if (invert != 34 && sendEvent34 == 1 && rxEvent26 == 1 && rxEvent27 == 1 && rxEvent28 == 1){    
+            if (invert != 34 && sendEvent34 == 1 && rxEvent[26] == 1 && rxEvent[27] == 1 && rxEvent[28] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber34);
                 sendEvent34 = 0;
                   }
-                  if (invert == 34 && sendEvent34 == 1 && rxEvent26 == 1 && rxEvent27 == 1 && rxEvent28 == 1){    
+                  if (invert == 34 && sendEvent34 == 1 && rxEvent[26] == 1 && rxEvent[27] == 1 && rxEvent[28] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber34);
                       sendEvent34 = 0;
                   }
                   
-               else if (invert != 34 && sendEvent34 == 0 && (rxEvent26 == 0 || rxEvent27 == 0 || rxEvent28 == 0)){
+               else if (invert != 34 && sendEvent34 == 0 && (rxEvent[26] == 0 || rxEvent[27] == 0 || rxEvent[28] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber34);
                         sendEvent34 = 1; 
                   }
-                 else if (invert == 34 && sendEvent34 == 0 && (rxEvent26 == 0 || rxEvent27 == 0 || rxEvent28 == 0)){
+                 else if (invert == 34 && sendEvent34 == 0 && (rxEvent[26] == 0 || rxEvent[27] == 0 || rxEvent[28] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber34);
                           sendEvent34 = 1; 
                   }  
@@ -1566,20 +1566,20 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
           if  (eventVariable2 == 35){
-            if (invert != 35 && sendEvent35 == 1 && rxEvent29 == 1 && rxEvent30 == 1 && rxEvent31 == 1){    
+            if (invert != 35 && sendEvent35 == 1 && rxEvent[29] == 1 && rxEvent[30] == 1 && rxEvent[31] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber35);
                 sendEvent35 = 0;
                   }
-                  if (invert == 35 && sendEvent35 == 1 && rxEvent29 == 1 && rxEvent30 == 1 && rxEvent31 == 1){    
+                  if (invert == 35 && sendEvent35 == 1 && rxEvent[29] == 1 && rxEvent[30] == 1 && rxEvent[31] == 1){    
                       cbus.sendOffEvent(true, logicEventNumber35);
                       sendEvent35 = 0;
                   }
                   
-               else if (invert != 35 && sendEvent35 == 0 && (rxEvent29 == 0 || rxEvent30 == 0 || rxEvent31 == 0)){
+               else if (invert != 35 && sendEvent35 == 0 && (rxEvent[29] == 0 || rxEvent[30] == 0 || rxEvent[31] == 0)){
                         cbus.sendOffEvent(true, logicEventNumber35);
                         sendEvent35 = 1; 
                   } 
-                 else if (invert == 35 && sendEvent35 == 0 && (rxEvent29 == 0 || rxEvent30 == 0 || rxEvent31 == 0)){
+                 else if (invert == 35 && sendEvent35 == 0 && (rxEvent[29] == 0 || rxEvent[30] == 0 || rxEvent[31] == 0)){
                           cbus.sendOnEvent(true, logicEventNumber35);
                           sendEvent35 = 1; 
                   }
