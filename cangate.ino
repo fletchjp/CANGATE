@@ -281,6 +281,27 @@ void twoInputAndGate(int ev1,int in1,int in2)
                     }
 }
 
+void threeInputAndGate(int ev1,int in1,int in2,int in3)
+{
+                if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
+                    cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                    sendEvent[ev1] = 0;
+                  }
+                   if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
+                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendEvent[ev1] = 0;
+                  } 
+                    
+               else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
+                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendEvent[ev1] = 1; 
+                  }
+                 else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
+                          cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                          sendEvent[ev1] = 1; 
+                  }     
+}
+
 void myUserFunc(Message *msg,MergCBUS *mcbus){
   
    byte CBUSOpc = msg->getOpc(); // Get The OPCODE from Message
@@ -290,7 +311,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
        
      
    
-   if (mcbus->eventMatch()){  //The recived event has been taught this module
+   if (mcbus->eventMatch()){  //The received event has been taught this module
 
         eventVariable1 = mcbus->getEventVar(msg,1);  // Use The Event Variables to  select which event to use for the logic
     
@@ -362,17 +383,11 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
 
-
-
-
-
-
-
-
 /********************************************************************************************/
 // 3 Input AND Gate 1
 /********************************************************************************************/
-
+        if (eventVariable2 == 31) threeInputAndGate(31,17,18,19);
+/*
           if  (eventVariable2 == 31){
               if (invert != 31 && sendEvent31 == 1 && rxEvent[17] == 1 && rxEvent[18] == 1 && rxEvent[19] == 1){    
                     cbus.sendOnEvent(true, logicEventNumber31);
@@ -392,14 +407,15 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent31 = 1; 
                   }     
             }
-
+*/
 /********************************************************************************************/
 
 
 /********************************************************************************************/
 // 3 Input AND Gate 2
 /********************************************************************************************/
-
+        if (eventVariable2 == 32) threeInputAndGate(32,20,21,22);
+/*
           if  (eventVariable2 == 32){
              if (invert != 32 && sendEvent32 == 1 && rxEvent[20] == 1 && rxEvent[21] == 1 && rxEvent[22] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber32);
@@ -419,14 +435,15 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent32 = 1; 
                   } 
              }
-
+*/
 /********************************************************************************************/
 
 
 /********************************************************************************************/
 // 3 Input AND Gate 3
 /********************************************************************************************/
-
+        if (eventVariable2 == 33) threeInputAndGate(33,23,24,25);
+/*
           if  (eventVariable2 == 33){
             if (invert != 33 && sendEvent33 == 1 && rxEvent[23] == 1 && rxEvent[24] == 1 && rxEvent[25] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber33);
@@ -446,7 +463,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent33 = 1; 
                   } 
              }
-
+*/
 /********************************************************************************************/
 
 
@@ -454,7 +471,8 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 // 3 Input AND Gate 4
 /********************************************************************************************/
-
+        if (eventVariable2 == 34) threeInputAndGate(34,26,27,28);
+/*
           if  (eventVariable2 == 34){
             if (invert != 34 && sendEvent34 == 1 && rxEvent[26] == 1 && rxEvent[27] == 1 && rxEvent[28] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber34);
@@ -474,7 +492,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent34 = 1; 
                   }  
            }
-
+*/
 /********************************************************************************************/
 
 
@@ -482,7 +500,8 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 // 3 Input AND Gate 5
 /********************************************************************************************/
-
+        if (eventVariable2 == 35) threeInputAndGate(35,29,30,31);
+/*
           if  (eventVariable2 == 35){
             if (invert != 35 && sendEvent35 == 1 && rxEvent[29] == 1 && rxEvent[30] == 1 && rxEvent[31] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber35);
@@ -502,14 +521,15 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent35 = 1; 
                   }
              }
-
+*/
 /********************************************************************************************/
 
 
 /********************************************************************************************/
 // 3 Input AND Gate 6
 /********************************************************************************************/
-
+        if (eventVariable2 == 36) threeInputAndGate(36,32,33,34);
+/*
           if  (eventVariable2 == 36){
             if (invert != 36 && sendEvent36 == 1 && rxEvent[32] == 1 && rxEvent[33] == 1 && rxEvent[34] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber36);
@@ -528,7 +548,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                           sendEvent36 = 1; 
                   } 
              }
-
+*/
 /********************************************************************************************/
 
 
@@ -536,7 +556,8 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 // 3 Input AND Gate 7
 /********************************************************************************************/
-
+        if (eventVariable2 == 37) threeInputAndGate(37,35,36,37);
+/*
           if (eventVariable2 == 37){
             if (invert != 37 && sendEvent37 == 1 && rxEvent[35] == 1 && rxEvent[36] == 1 && rxEvent[37] == 1){    
               cbus.sendOnEvent(true, logicEventNumber37);
@@ -556,7 +577,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                         sendEvent37 = 1; 
                   }
              }
-
+*/
 /********************************************************************************************/
 
 
@@ -564,7 +585,8 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 // 3 Input AND Gate 8
 /********************************************************************************************/
-
+        if (eventVariable2 == 38) threeInputAndGate(38,38,39,40);
+/*
           if  (eventVariable2 == 38){
             if (invert != 38 && sendEvent38 == 1 && rxEvent[38] == 1 && rxEvent[39] == 1 && rxEvent[40] == 1){    
                 cbus.sendOnEvent(true, logicEventNumber38);
@@ -584,7 +606,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                          sendEvent38 = 1; 
                   } 
              }
-
+*/
 /********************************************************************************************/
 
 
