@@ -61,7 +61,9 @@ VCC         		5V
 
 /********************************************************************************************/
 
-
+  // Explore using arrays to reduce the amount of repetitive code.
+  #define INCOMING_EVENT1_VALUES 104
+  bool rxEvent[INCOMING_EVENT1_VALUES+1]; // These need to be set to 0.
 
 /********************************************************************************************/
 //Variables
@@ -342,7 +344,10 @@ void setup () {
   //Note the clock speed 8Mhz. If 16Mhz crystal fitted change above to MCP_16Mhz
 /********************************************************************************************/
 
-
+// Set all these to zero.
+  for (int i = 1; i <= INCOMING_EVENT1_VALUES; i++) {
+    rxEvent[i] = 0;
+  }
 
 
 } // End Of Set Up
@@ -375,6 +380,15 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
         invert = mcbus->getEventVar(msg,3); // used to invert event
 
 /********************************************************************************************/
+         if(eventVariable1 > 0 && eventVariable1 <= INCOMING_EVENT1_VALUES) {
+                     if (mcbus->isAccOn()== true){
+                        rxEvent[eventVariable1] = 1; 
+                        }
+                     else if (mcbus->isAccOff()== true) {
+                        rxEvent[eventVariable1] = 0;   
+                       }
+         }
+         /*
          switch(eventVariable1) {  
 
                case 1: 
@@ -1211,7 +1225,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
                        break;
 					   
          }
-               
+         */      
    
     
 /********************************************************************************************/         
