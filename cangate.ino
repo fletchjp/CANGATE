@@ -76,7 +76,7 @@ int eventVariable1; // used for gate input
 int eventVariable2; // used for gate type
 int invert; // used to invert output event
 
-
+/*
    int logicEventNumber21 = 210;  
    int logicEventNumber22 = 220;  
    int logicEventNumber23 = 230;  
@@ -117,7 +117,7 @@ int invert; // used to invert output event
    int logicEventNumber57 = 570;  
    int logicEventNumber58 = 580;  
 
-
+*/
 
 
 
@@ -126,40 +126,40 @@ int invert; // used to invert output event
  /********************************************************************************************/
  // flags for 2 input AND Gates  
  /********************************************************************************************/
-   bool sendEvent21 = 1;
+ /*  bool sendEvent21 = 1;
    bool sendEvent22 = 1;
    bool sendEvent23 = 1;
    bool sendEvent24 = 1;
    bool sendEvent25 = 1;
    bool sendEvent26 = 1;
    bool sendEvent27 = 1;
-   bool sendEvent28 = 1;
+   bool sendEvent28 = 1; */
  /********************************************************************************************/
  // flags for 3 input AND Gates  
  /********************************************************************************************/
-   bool sendEvent31 = 1;
+ /*  bool sendEvent31 = 1;
    bool sendEvent32 = 1;
    bool sendEvent33 = 1;
    bool sendEvent34 = 1;
    bool sendEvent35 = 1;
    bool sendEvent36 = 1;
    bool sendEvent37 = 1;
-   bool sendEvent38 = 1;
-  /********************************************************************************************/
+   bool sendEvent38 = 1;*/
+ /********************************************************************************************/
  // flags for 4 input AND Gates  
  /********************************************************************************************/
-   bool sendEvent41 = 1;
+ /*  bool sendEvent41 = 1;
    bool sendEvent42 = 1;
    bool sendEvent43 = 1;
    bool sendEvent44 = 1;
    bool sendEvent45 = 1;
    bool sendEvent46 = 1;
    bool sendEvent47 = 1;
-   bool sendEvent48 = 1;
+   bool sendEvent48 = 1; */
  /********************************************************************************************/
  // flags for 4 input OR Gates  
  /********************************************************************************************/
-   bool sendEvent51 = 1;
+/*   bool sendEvent51 = 1;
    bool sendEvent52 = 1;
    bool sendEvent53 = 1;
    bool sendEvent54 = 1;
@@ -167,7 +167,7 @@ int invert; // used to invert output event
    bool sendEvent56 = 1;
    bool sendEvent57 = 1;
    bool sendEvent58 = 1;
-
+*/
 
  /********************************************************************************************/
  //  event status flags now set in a loop.
