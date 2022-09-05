@@ -337,7 +337,7 @@ void setup () {
   cbus.setLeds(GREEN_LED,YELLOW_LED);                 //set the led ports
   cbus.setPushButton(PUSH_BUTTON);                    //set the push button ports
   cbus.setUserHandlerFunction(&myUserFunc);           //function that implements the node logic when recieving events
-  cbus.initCanBus(10,CAN_125KBPS,MCP_8MHz,10,200);    //initiate the transport layer. pin=10, rate=125Kbps,10 tries,200 millis between each try
+  cbus.initCanBus(10,CAN_125KBPS,MCP_16MHz,10,200);    //initiate the transport layer. pin=10, rate=125Kbps,10 tries,200 millis between each try
   
   //Note the clock speed 8Mhz. If 16Mhz crystal fitted change above to MCP_16Mhz
 /********************************************************************************************/
