@@ -51,8 +51,8 @@ VCC         		5V
 //CBUS definitions
 /********************************************************************************************/
   #define GREEN_LED 4               //MERG Green (SLIM) LED port
-  #define YELLOW_LED 5              //MERG Yellow (FLIM) LED port
-  #define PUSH_BUTTON 6             //std merg FLIM / SLIM push button
+  #define YELLOW_LED 7              //MERG Yellow (FLIM) LED port
+  #define PUSH_BUTTON 8             //std merg FLIM / SLIM push button
   //#define PUSH_BUTTON1 7          //debug push button
   #define NODE_VARS 1               //sets up number of NVs for module to store variables
   #define NODE_EVENTS 136           //Max Number of supported Events
