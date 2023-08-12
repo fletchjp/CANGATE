@@ -1,6 +1,7 @@
 
 /********************************************************************************************/
- /* CANGATE
+ /* CANGATE version using Duncan Greenwood's CBUS library
+  *******************************************************
   *  Two, Three or Four input AND 'gates'   Four input 0R 'gate' for CBUS Events.
   *  Also invert output event to cretae NAND and NOR
   *  No Arduino programming required - black box - similar to standard MERG CBUS kits
@@ -30,20 +31,60 @@ VCC         		5V
 */
 /********************************************************************************************/
 
+#define DEBUG 0       // set to 0 for no serial debug
+
+#if DEBUG
+#define DEBUG_PRINT(S) Serial << S << endl
+#else
+#define DEBUG_PRINT(S)
+#endif
 
 /********************************************************************************************/
 // Load CBUS Libraries
 /********************************************************************************************/
 
-#include <SPI.h>        //equired by the CBUS library to communicate to MCP2515 CAN Controller
-#include <MergCBUS.h>  // Main CBUS Library
-#include <Message.h>   // CBUS Message Libary
-#include <EEPROM.h>   //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
+//#include <SPI.h>        //equired by the CBUS library to communicate to MCP2515 CAN Controller
+//#include <MergCBUS.h>  // Main CBUS Library
+//#include <Message.h>   // CBUS Message Libary
+//#include <EEPROM.h>   //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
 
+// 3rd party libraries
+#include <Streaming.h>
+
+// CBUS library header files
+#include <CBUS2515.h>            // CAN controller and CBUS class
+#include "LEDControl.h"          // CBUS LEDs
+#include <CBUSconfig.h>          // module configuration
+#include <cbusdefs.h>            // MERG CBUS constants
+#include <CBUSParams.h>
 
 /********************************************************************************************/
 
+////////////DEFINE MODULE/////////////////////////////////////////////////
 
+// module name
+unsigned char mname[7] = { 'G', 'A', 'T', 'E', ' ', ' ', ' ' };
+
+// constants
+const byte VER_MAJ = 2;         // code major version
+const char VER_MIN = ' ';       // code minor version
+const byte VER_BETA = 0;        // code beta sub-version
+const byte MODULE_ID = 99;      // CBUS module type
+
+const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
+
+//////////////////////////////////////////////////////////////////////////
+
+//CBUS pins
+const byte CAN_INT_PIN = 2;  // Only pin 2 and 3 support interrupts
+const byte CAN_CS_PIN = 10;
+//const byte CAN_SI_PIN = 11;  // Cannot be changed
+//const byte CAN_SO_PIN = 12;  // Cannot be changed
+//const byte CAN_SCK_PIN = 13;  // Cannot be changed
+
+// CBUS objects
+CBUS2515 CBUS;                      // CBUS object
+CBUSConfig config;                  // configuration object
 
 
 
@@ -58,6 +99,49 @@ VCC         		5V
   #define NODE_EVENTS 136           //Max Number of supported Events
   #define EVENTS_VARS 20            //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
+
+//
+///  setup CBUS - runs once at power on called from setup()
+//
+void setupCBUS()
+{
+  // set config layout parameters
+  config.EE_NVS_START = 10;
+  config.EE_NUM_NVS = NODE_VARS;
+  config.EE_EVENTS_START = 50;
+  config.EE_MAX_EVENTS = NODE_EVENTS;
+  config.EE_NUM_EVS = EVENT_VARS;
+  config.EE_BYTES_PER_EVENT = (config.EE_NUM_EVS + 4);
+
+  // initialise and load configuration
+  config.setEEPROMtype(EEPROM_INTERNAL);
+  config.begin();
+
+  Serial << F("> mode = ") << ((config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID;
+  Serial << F(", NN = ") << config.nodeNum << endl;
+
+  // show code version and copyright notice
+  printConfig();
+
+  // set module parameters
+  CBUSParams params(config);
+  params.setVersion(VER_MAJ, VER_MIN, VER_BETA);
+  params.setModuleId(MODULE_ID);
+  params.setFlags(PF_FLiM | PF_COMBI);
+
+  // assign to CBUS
+  CBUS.setParams(params.getParams());
+  CBUS.setName(mname);
+
+  // register our CBUS event handler, to receive event messages of learned events
+  CBUS.setEventHandler(eventhandler);
+
+  // configure and start CAN bus and CBUS message processing
+  CBUS.setNumBuffers(2);         // more buffers = more memory used, fewer = less
+  CBUS.setOscFreq(CAN_OSC_FREQ);   // select the crystal frequency of the CAN module
+  CBUS.setPins(CAN_CS_PIN, CAN_INT_PIN);           // select pins for CAN bus CE and interrupt connections
+  CBUS.begin();
+}
 
 /********************************************************************************************/
 
@@ -177,16 +261,20 @@ int invert; // used to invert output event
 //Create the MERG CBUS object - cbus
 /********************************************************************************************/
 
-MergCBUS cbus=MergCBUS(NODE_VARS,NODE_EVENTS,EVENTS_VARS,DEVICE_NUMBERS);
+//MergCBUS cbus=MergCBUS(NODE_VARS,NODE_EVENTS,EVENTS_VARS,DEVICE_NUMBERS);
 
 /********************************************************************************************/
 
 
 
-MergNodeIdentification MergNode=MergNodeIdentification();
+//MergNodeIdentification MergNode=MergNodeIdentification();
 
 
 void setup () {
+  Serial.begin (115200);
+  Serial << endl << endl << F("> ** CANGATE ** ") << __FILE__ << endl;
+
+  setupCBUS();
 
 
 
@@ -194,7 +282,7 @@ void setup () {
 /********************************************************************************************/
 //Configuration CBUS data for the node
 /********************************************************************************************/
-
+/*
   cbus.getNodeId()->setNodeName("GATE",4);       	 	// node name shows in FCU when first detected set your own name for each module - max 7 characters
   cbus.getNodeId()->setModuleId(75);               	    // module number - see cbusdefs
   cbus.getNodeId()->setManufacturerId(0xA5);        	// MERG code
@@ -210,7 +298,7 @@ void setup () {
 
 
   cbus.setStdNN(999);                               // Node Number in SLIM Mode. The default is 0 for Consumers or 1 - 99 for Producers.
-  
+ */ 
 
   
 
@@ -230,12 +318,12 @@ void setup () {
 /********************************************************************************************/
 // Set ports and CAN Transport Layer
 /********************************************************************************************/
-
+/*
   cbus.setLeds(GREEN_LED,YELLOW_LED);                 //set the led ports
   cbus.setPushButton(PUSH_BUTTON);                    //set the push button ports
   cbus.setUserHandlerFunction(&myUserFunc);           //function that implements the node logic when recieving events
   cbus.initCanBus(10,CAN_125KBPS,MCP_8MHz,10,200);    //initiate the transport layer. pin=10, rate=125Kbps,10 tries,200 millis between each try
-  
+ */ 
   //Note the clock speed 8Mhz. If 16Mhz crystal fitted change above to MCP_16Mhz
 /********************************************************************************************/
 
@@ -253,6 +341,20 @@ void setup () {
 } // End Of Set Up
 
 
+
+void printConfig(void)
+{
+  // code version
+  Serial << F("> code version = ") << VER_MAJ << VER_MIN << F(" beta ") << VER_BETA << endl;
+  Serial << F("> compiled on ") << __DATE__ << F(" at ") << __TIME__ << F(", compiler ver = ") << __cplusplus << endl;
+
+  // copyright
+  Serial << F("> © Phil Silver (MERG M4082) 2022") << endl;
+  Serial << F("> © Martin Da Costa (MERG M6223) 2021") << endl;
+  Serial << F("> © Duncan Greenwood (MERG M5767) 2021") << endl;
+  Serial << F("> © John Fletcher (MERG M6777) 2023") << endl;
+  Serial << F("> © Sven Rosvall (MERG M3777) 2021") << endl;
+}
 
 
 
