@@ -1,6 +1,7 @@
 
 /********************************************************************************************/
  /* CANGATE version using Duncan Greenwood's CBUS library
+  * I have done this in such a way as to minimize changes to the event sending code.
   *******************************************************
   *  Two, Three or Four input AND 'gates'   Four input 0R 'gate' for CBUS Events.
   *  Also invert output event to cretae NAND and NOR
@@ -428,7 +429,7 @@ void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
 void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 {
              if (invert != ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                 cbus.sendOnEvent(true  , logicEventNumber[ev1]);
                   sendEvent[ev1] = 0;
                   }
                 if (invert == ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
@@ -446,29 +447,46 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
                  } 
 }
 
-void myUserFunc(Message *msg,MergCBUS *mcbus){
+//
+/// called from the CBUS library when a learned event is received
+//
+void eventhandler(byte index, CANFrame *msg)
+{
+  byte CBUSOpc = msg->data[0];
+
+  DEBUG_PRINT(F("> event handler: index = ") << index << F(", opcode = 0x") << _HEX(msg->data[0]));
+  DEBUG_PRINT(F("> event handler: length = ") << msg->len);
+
+  unsigned int nodeNumber = (msg->data[1] << 8 ) + msg->data[2];
+  unsigned int eventNumber = (msg->data[3] << 8 ) + msg->data[4];
+  DEBUG_PRINT(F("> NN = ") << node_number << F(", EN = ") << event_number);
+  DEBUG_PRINT(F("> op_code = ") << opc);
+
+//void myUserFunc(Message *msg,MergCBUS *mcbus){
   
-   byte CBUSOpc = msg->getOpc(); // Get The OPCODE from Message
-   int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
-   int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
+   //byte CBUSOpc = msg->getOpc(); // Get The OPCODE from Message
+   //int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
+   //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
    
-       
+   bool isAccOn  = ((opc == OPC_ACON) || (opc == OPC_ASON) );
+   bool isAccOff = ((opc == OPC_ACOF) || (opc == OPC_ASOF) );
+
      
-   
-   if (mcbus->eventMatch()){  //The received event has been taught this module
+   // This is not needed as only taught events are seen here
+   //if (mcbus->eventMatch()){  //The received event has been taught this module
 
-        eventVariable1 = mcbus->getEventVar(msg,1);  // Use The Event Variables to  select which event to use for the logic
+        eventVariable1 = config.getEventEVval(index, 1);// mcbus->getEventVar(msg,1);  // Use The Event Variables to  select which event to use for the logic
     
-        eventVariable2 = mcbus->getEventVar(msg,2); // Use the Event variable to select gate type
+        eventVariable2 = config.getEventEVval(index, 2);//mcbus->getEventVar(msg,2); // Use the Event variable to select gate type
 
-        invert = mcbus->getEventVar(msg,3); // used to invert event
+        invert = config.getEventEVval(index, 3);        //mcbus->getEventVar(msg,3); // used to invert event
 
 /********************************************************************************************/
          if(eventVariable1 > 0 && eventVariable1 <= INCOMING_EVENT1_VALUES) {
-                     if (mcbus->isAccOn()== true){
+                     if (isAccOn){
                         rxEvent[eventVariable1] = 1; 
                         }
-                     else if (mcbus->isAccOff()== true) {
+                     else if (isAccOff) {
                         rxEvent[eventVariable1] = 0;   
                        }
          }
@@ -672,7 +690,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 /********************************************************************************************/
 
 
-        } // End OF Recieved Events
+       // } // End OF Recieved Events Not needed
           
     
            
