@@ -32,7 +32,7 @@ VCC         		5V
 */
 /********************************************************************************************/
 
-#define DEBUG 0       // set to 0 for no serial debug
+#define DEBUG 1       // set to 0 for no serial debug
 
 #if DEBUG
 #define DEBUG_PRINT(S) Serial << S << endl
@@ -54,7 +54,7 @@ VCC         		5V
 
 // CBUS library header files
 #include <CBUS2515.h>            // CAN controller and CBUS class
-#include "LEDControl.h"          // CBUS LEDs
+//#include "LEDControl.h"          // CBUS LEDs
 #include <CBUSconfig.h>          // module configuration
 #include <cbusdefs.h>            // MERG CBUS constants
 #include <CBUSParams.h>
@@ -478,8 +478,8 @@ void eventhandler(byte index, CANFrame *msg)
 
   unsigned int nodeNumber = (msg->data[1] << 8 ) + msg->data[2];
   unsigned int eventNumber = (msg->data[3] << 8 ) + msg->data[4];
-  DEBUG_PRINT(F("> NN = ") << node_number << F(", EN = ") << event_number);
-  DEBUG_PRINT(F("> op_code = ") << opc);
+  DEBUG_PRINT(F("> NN = ") << nodeNumber << F(", EN = ") << eventNumber);
+  DEBUG_PRINT(F("> op_code = ") << CBUSOpc);
 
 //void myUserFunc(Message *msg,MergCBUS *mcbus){
   
