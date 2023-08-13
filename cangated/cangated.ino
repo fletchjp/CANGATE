@@ -70,7 +70,7 @@ unsigned char mname[7] = { 'G', 'A', 'T', 'E', ' ', ' ', ' ' };
 const byte VER_MAJ = 2;         // code major version
 const char VER_MIN = ' ';       // code minor version
 const byte VER_BETA = 0;        // code beta sub-version
-const byte MODULE_ID = 99;      // CBUS module type
+const byte MODULE_ID = 75;      // CBUS module type 75 for CANGATE
 
 const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
 
@@ -87,6 +87,8 @@ const byte CAN_CS_PIN = 10;
 CBUS2515 CBUS;                      // CBUS object
 CBUSConfig config;                  // configuration object
 
+CBUSLED ledGrn, ledYlw;             // LED objects
+CBUSSwitch pb_switch;               // switch object
 
 
 /********************************************************************************************/
@@ -111,7 +113,7 @@ void setupCBUS()
   config.EE_NUM_NVS = NODE_VARS;
   config.EE_EVENTS_START = 50;
   config.EE_MAX_EVENTS = NODE_EVENTS;
-  config.EE_NUM_EVS = EVENT_VARS;
+  config.EE_NUM_EVS = EVENTS_VARS;
   config.EE_BYTES_PER_EVENT = (config.EE_NUM_EVS + 4);
 
   // initialise and load configuration
@@ -136,6 +138,15 @@ void setupCBUS()
 
   // register our CBUS event handler, to receive event messages of learned events
   CBUS.setEventHandler(eventhandler);
+
+  // set LED and switch pins and assign to CBUS
+  ledGrn.setPin(GREEN_LED);
+  ledYlw.setPin(YELLOW_LED);
+  CBUS.setLEDs(ledGrn, ledYlw);
+  CBUS.setSwitch(pb_switch);
+
+  // set CBUS LEDs to indicate mode
+  CBUS.indicateMode(config.FLiM);
 
   // configure and start CAN bus and CBUS message processing
   CBUS.setNumBuffers(2);         // more buffers = more memory used, fewer = less
@@ -277,7 +288,15 @@ void setup () {
 
   setupCBUS();
 
+  pb_switch.setPin(PUSH_BUTTON, LOW);
+  Serial << F("> Switch set to go LOW when pressed") << endl;
 
+  if (pb_switch.isPressed() && !config.FLiM) {
+//#if DEBUG
+    Serial << F("> switch was pressed at startup in SLiM mode") << endl;
+//#endif
+    config.resetModule(ledGrn, ledYlw, pb_switch);
+  }
 
 
 /********************************************************************************************/
@@ -366,20 +385,20 @@ void printConfig(void)
 void twoInputAndGate(int ev1,int in1,int in2)
 {
          if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                sendOnEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
               }
               if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                 cbus.sendOffEvent(true, logicEventNumber[21]);
+                  sendOffEvent(true, logicEventNumber[21]);
                   sendEvent[ev1] = 0;
                   }
                   
            else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
-                    cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                    sendOffEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
                     }
               else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
-                      cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                      sendOnEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
                     }
 }
@@ -387,20 +406,20 @@ void twoInputAndGate(int ev1,int in1,int in2)
 void threeInputAndGate(int ev1,int in1,int in2,int in3)
 {
                 if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
-                    cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                    sendOnEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 0;
                   }
                    if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 0;
                   } 
                     
                else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
                  else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
-                          cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                          sendOnEvent(true, logicEventNumber[ev1]);
                           sendEvent[ev1] = 1; 
                   }     
 }
@@ -408,20 +427,20 @@ void threeInputAndGate(int ev1,int in1,int in2,int in3)
 void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
 {
                 if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1 && rxEvent[in4] == 1){    
-                    cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                    sendOnEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 0;
                   }
                    if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1 && rxEvent[in4] == 1){    
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 0;
                   } 
                     
                else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
                  else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
-                          cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                          sendOnEvent(true, logicEventNumber[ev1]);
                           sendEvent[ev1] = 1; 
                   }     
 }
@@ -429,21 +448,21 @@ void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
 void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 {
              if (invert != ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
-                 cbus.sendOnEvent(true  , logicEventNumber[ev1]);
+                  sendOnEvent(true  , logicEventNumber[ev1]);
                   sendEvent[ev1] = 0;
                   }
                 if (invert == ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
-                 cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                  sendOffEvent(true, logicEventNumber[ev1]);
                   sendEvent[ev1] = 0;
                  }
                  
                   else if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber[ev1]);
-                              sendEvent[ev1] = 1; 
+                            sendOffEvent(true, logicEventNumber[ev1]);
+                            sendEvent[ev1] = 1; 
                  } 
                  else if (invert == ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber[ev1]);
-                              sendEvent[ev1] = 1; 
+                            sendOnEvent(true, logicEventNumber[ev1]);
+                            sendEvent[ev1] = 1; 
                  } 
 }
 
@@ -468,8 +487,8 @@ void eventhandler(byte index, CANFrame *msg)
    //int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
    //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
    
-   bool isAccOn  = ((opc == OPC_ACON) || (opc == OPC_ASON) );
-   bool isAccOff = ((opc == OPC_ACOF) || (opc == OPC_ASOF) );
+   bool isAccOn  = ((CBUSOpc == OPC_ACON) || (CBUSOpc == OPC_ASON) );
+   bool isAccOff = ((CBUSOpc == OPC_ACOF) || (CBUSOpc == OPC_ASOF) );
 
      
    // This is not needed as only taught events are seen here
@@ -701,7 +720,8 @@ void eventhandler(byte index, CANFrame *msg)
 /*FUNCTIONS FINISH ***********************************************************************************/
 
 // Send an event routine according to Module Switch
-bool sendEvent(byte opCode, unsigned int eventNo)
+// Renamed to avoid name clash
+bool sendAnEvent(byte opCode, unsigned int eventNo)
 {
   CANFrame msg;
   msg.id = config.CANID;
@@ -721,11 +741,29 @@ bool sendEvent(byte opCode, unsigned int eventNo)
   return success;
 }
 
+bool sendOnEvent(bool longEvent, unsigned int eventNo)
+{
+   if(longEvent) return sendAnEvent(OPC_ACON,eventNo);
+   else return sendAnEvent(OPC_ASON,eventNo);
+}
+
+bool sendOffEvent(bool longEvent, unsigned int eventNo)
+{
+   if(longEvent) return sendAnEvent(OPC_ACOF,eventNo);
+   else return sendAnEvent(OPC_ASOF,eventNo);
+}
+
+
 
 void loop() {
 
-    cbus.run();// Run CBUS
-    cbus.cbusRead(); // Check CBUS Buffers for any activity
+   // cbus.run();// Run CBUS
+   // cbus.cbusRead(); // Check CBUS Buffers for any activity
+  // do CBUS message, switch and LED processing
+  CBUS.process();
+
+  // process console commands
+  processSerialInput();
 
 }
 
