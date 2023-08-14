@@ -253,30 +253,41 @@ void setup () {
 } // End Of Set Up
 
 
+// The idea of these routines is to remove the direct use of cbus
+// to a small number of locations.
+// This means that the functions no longer refer to cbus.
+// This could be used to implement short event sending as an option.
+bool sendOnEvent(bool longEvent, unsigned int eventNo)
+{
+   return cbus.sendOnEvent(longEvent, eventNo);
+}
 
-
+bool sendOffEvent(bool longEvent, unsigned int eventNo)
+{
+   return cbus.sendOffEvent(longEvent, eventNo);
+}
 
 /********************************************************************************************/
-//  Functions
+//  Functions which no longer refer directly to the cbus object.
 /********************************************************************************************/
 
 void twoInputAndGate(int ev1,int in1,int in2)
 {
          if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                sendOnEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
               }
               if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                 cbus.sendOffEvent(true, logicEventNumber[21]);
-                  sendEvent[ev1] = 0;
-                  }
+                sendOffEvent(true, logicEventNumber[21]);
+                sendEvent[ev1] = 0;
+              }
                   
            else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
-                    cbus.sendOffEvent(true, logicEventNumber[ev1]);
-                    sendEvent[ev1] = 1; 
+                      sendOffEvent(true, logicEventNumber[ev1]);
+                      sendEvent[ev1] = 1; 
                     }
               else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
-                      cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                      sendOnEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
                     }
 }
@@ -284,20 +295,20 @@ void twoInputAndGate(int ev1,int in1,int in2)
 void threeInputAndGate(int ev1,int in1,int in2,int in3)
 {
                 if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
-                    cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                    sendOnEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 0;
                   }
                    if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 0;
                   } 
                     
                else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
                  else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
-                          cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                          sendOnEvent(true, logicEventNumber[ev1]);
                           sendEvent[ev1] = 1; 
                   }     
 }
@@ -305,20 +316,20 @@ void threeInputAndGate(int ev1,int in1,int in2,int in3)
 void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
 {
                 if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1 && rxEvent[in4] == 1){    
-                    cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                    sendOnEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 0;
                   }
                    if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1 && rxEvent[in4] == 1){    
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 0;
                   } 
                     
                else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
-                        cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                        sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
                  else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
-                          cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                          sendOnEvent(true, logicEventNumber[ev1]);
                           sendEvent[ev1] = 1; 
                   }     
 }
@@ -326,20 +337,20 @@ void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
 void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 {
              if (invert != ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
-                 cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                  sendOnEvent(true, logicEventNumber[ev1]);
                   sendEvent[ev1] = 0;
                   }
                 if (invert == ev1 && sendEvent[ev1] == 1 && (rxEvent[in1] == 1 || rxEvent[in2] == 1 || rxEvent[in3] == 1 || rxEvent[in4] == 1)){
-                 cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                  sendOffEvent(true, logicEventNumber[ev1]);
                   sendEvent[ev1] = 0;
                  }
                  
                   else if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
-                            cbus.sendOffEvent(true, logicEventNumber[ev1]);
+                              sendOffEvent(true, logicEventNumber[ev1]);
                               sendEvent[ev1] = 1; 
                  } 
                  else if (invert == ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
-                            cbus.sendOnEvent(true, logicEventNumber[ev1]);
+                              sendOnEvent(true, logicEventNumber[ev1]);
                               sendEvent[ev1] = 1; 
                  } 
 }
