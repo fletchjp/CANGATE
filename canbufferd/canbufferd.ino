@@ -1,6 +1,8 @@
 
 /********************************************************************************************/
- /* CANBUFFER
+ /* CANBUFFER version using Duncan Greenwood's CBUS library
+  * I have done this in such a way as to minimize changes to the event sending code.
+  *******************************************************
   * Can be used in conjunction with CANGATE as an allternative way to produce a 'self consumed' event
   * Outputs of CANGATE can be fed into inputs
   * Setting Event variable 1 to 255 will invert the output event
