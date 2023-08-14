@@ -325,36 +325,42 @@ void eventhandler(byte index, CANFrame *msg)
   // byte CBUSOpc = msg->getOpc(); // Get The OPCODE from Message
    //int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
    //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
-   int eventVariable1 = config.getEventEVval(index, 1); //mcbus->getEventVar(msg,1);
-   
+    int eventVariable1 = config.getEventEVval(index, 1); //mcbus->getEventVar(msg,1);
+    int eventVariable2 = config.getEventEVval(index, 2); //mcbus->getEventVar(msg,1);
+  
+    // New code for eventfactor 
+    unsigned int eventFactor = 1;
+    if (eventVariable2 > 0 && eventVariable2 < 11) eventFactor = eventVariable2;
+    unsigned int eventNumberOut = eventNumber*eventFactor;
+
    //if (mcbus->eventMatch()){  //The recived event has been taught this module
 
-                    if (nonInverting==1){
-                     if (mcbus->isAccOn()== true){
-                        cbus.sendOnEvent(true, eventNumber);
-                        nonInverting=0;
-                        }
+                    if (nonInverting){
+                      if (isAccOn){
+                        sendOnEvent(true, eventNumberOut);
+                        nonInverting=false;
+                      }
                     }
-                      if (nonInverting == 0){ 
-                      if (mcbus->isAccOff()== true) {
-                      cbus.sendOffEvent(true, eventNumber);
-                      nonInverting=1;
+                    if (!nonInverting){ 
+                      if (isAccOff) {
+                         sendOffEvent(true, eventNumberOut);
+                         nonInverting=false;
                        }
-                     }
+                    }
 
-             if (eventVariable1 == 255){
-               inverting=1;
-                    if (mcbus->isAccOn()== true){
-                        cbus.sendOffEvent(true, eventNumber);
-                        inverting=0;
+              if (eventVariable1 == 255){
+                    inverting=true;
+                    if (isAccOn){
+                        sendOffEvent(true, eventNumberOut);
+                        inverting=false;
                         }
-                     if (inverting == 0){
-                     if (mcbus->isAccOff()== true) {
-                      cbus.sendOnEvent(true, eventNumber);
-                      inverting=1;
-                     }
-                     }
-       }
+                    if (!inverting){
+                       if (isAccOff) {
+                        sendOnEvent(true, eventNumber);
+                        inverting=false;
+                       }
+                    }
+              }
                   
             
         //} // End OF Recieved Events
