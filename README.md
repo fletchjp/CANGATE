@@ -9,6 +9,8 @@
 
 ## Suggested modified versions
 
+These should work the same as CANGATE although they have not yet been tested.
+
 ### cangate
 
  This version has functions to reduce the duplication in the code.
@@ -21,6 +23,12 @@
 This new version uses DuncanGreenwood's ArduinoCBUS library instead of the MergCBUS library.
 
 This provides the alternative way of making the FLiM/SLiM change for FCU using the Arduino serial monitor. This means the code could be run on other hardware.
+
+The code for working with LEDs and a push button is also available.
+
+Details of how this works are in the README file for CANmINnOUT which can be found here: 
+
+https://github.com/MartinDaCosta53/CANmINnOUT
 
 John Fletcher <M6777> August 2023
 
