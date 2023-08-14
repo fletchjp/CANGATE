@@ -186,6 +186,21 @@ void setupCBUS()
 
 void setup () {
 
+  Serial.begin (115200);
+  Serial << endl << endl << F("> ** CANBUFFERD ** ") << __FILE__ << endl;
+  Serial << F("> This version uses the ArduinoCBUS libraries") << endl;
+
+  setupCBUS();
+
+  pb_switch.setPin(PUSH_BUTTON, LOW);
+  Serial << F("> Switch set to go LOW when pressed") << endl;
+
+  if (pb_switch.isPressed() && !config.FLiM) {
+//#if DEBUG
+    Serial << F("> switch was pressed at startup in SLiM mode") << endl;
+//#endif
+    config.resetModule(ledGrn, ledYlw, pb_switch);
+  }
 
 
 
@@ -193,6 +208,7 @@ void setup () {
 //Configuration CBUS data for the node
 /********************************************************************************************/
 
+/*
   cbus.getNodeId()->setNodeName("CANBUFF",7);       //node name shows in FCU when first detected set your own name for each module - max 8 characters
   cbus.getNodeId()->setModuleId(129);               //module number - set above 100 to avoid conflict with other MERG CBUS modules
   cbus.getNodeId()->setManufacturerId(0xA5);        //MERG code
@@ -208,7 +224,7 @@ void setup () {
 
 
   cbus.setStdNN(999);                               // Node Number in SLIM Mode. The default is 0 for Consumers or 1 - 99 for Producers.
-  
+*/
 
  
 
@@ -217,12 +233,12 @@ void setup () {
 /********************************************************************************************/
 // Set ports and CAN Transport Layer
 /********************************************************************************************/
-
+/*
   cbus.setLeds(GREEN_LED,YELLOW_LED);//set the led ports
   cbus.setPushButton(PUSH_BUTTON);//set the push button ports
   cbus.setUserHandlerFunction(&myUserFunc);//function that implements the node logic when recieving events
   cbus.initCanBus(10,CAN_125KBPS,MCP_16MHz,10,200);  //initiate the transport layer. pin=10, rate=125Kbps,10 tries,200 millis between each try
-  
+*/  
   //Note the clock speed 8Mhz. If 16Mhz crystal fitted change above to MCP_16Mhz
 /********************************************************************************************/
 
@@ -231,12 +247,59 @@ void setup () {
 } // End Of Set Up
 
 
+void printConfig(void)
+{
+  // code version
+  Serial << F("> code version = ") << VER_MAJ << VER_MIN << F(" beta ") << VER_BETA << endl;
+  Serial << F("> compiled on ") << __DATE__ << F(" at ") << __TIME__ << F(", compiler ver = ") << __cplusplus << endl;
+
+  // copyright
+  Serial << F("> © Phil Silver (MERG M4082) 2022") << endl;
+  Serial << F("> © Martin Da Costa (MERG M6223) 2021") << endl;
+  Serial << F("> © Duncan Greenwood (MERG M5767) 2021") << endl;
+  Serial << F("> © John Fletcher (MERG M6777) 2023") << endl;
+  Serial << F("> © Sven Rosvall (MERG M3777) 2021") << endl;
+}
 
 
 
 /********************************************************************************************/
 //  Functions
 /********************************************************************************************/
+
+// Send an event routine according to Module Switch
+// Renamed to avoid name clash
+bool sendAnEvent(byte opCode, unsigned int eventNo)
+{
+  CANFrame msg;
+  msg.id = config.CANID;
+  msg.len = 5;
+  msg.data[0] = opCode;
+  msg.data[1] = highByte(config.nodeNum);
+  msg.data[2] = lowByte(config.nodeNum);
+  msg.data[3] = highByte(eventNo);
+  msg.data[4] = lowByte(eventNo);
+
+  bool success = CBUS.sendMessage(&msg);
+  if (success) {
+    DEBUG_PRINT(F("> sent CBUS message with Event Number ") << eventNo);
+  } else {
+    DEBUG_PRINT(F("> error sending CBUS message"));
+  }
+  return success;
+}
+
+bool sendOnEvent(bool longEvent, unsigned int eventNo)
+{
+   if(longEvent) return sendAnEvent(OPC_ACON,eventNo);
+   else return sendAnEvent(OPC_ASON,eventNo);
+}
+
+bool sendOffEvent(bool longEvent, unsigned int eventNo)
+{
+   if(longEvent) return sendAnEvent(OPC_ACOF,eventNo);
+   else return sendAnEvent(OPC_ASOF,eventNo);
+}
 
 
 
@@ -293,7 +356,160 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
 
 void loop() {
 
-    cbus.run();// Run CBUS
-    cbus.cbusRead(); // Check CBUS Buffers for any activity
+    //cbus.run();// Run CBUS
+    //cbus.cbusRead(); // Check CBUS Buffers for any activity
+  // do CBUS message, switch and LED processing
+  CBUS.process();
+
+  // process console commands
+  processSerialInput();
 
 }
+
+
+void processSerialInput(void)
+{
+  byte uev = 0;
+  char msgstr[32];
+
+  if (Serial.available()) {
+    char c = Serial.read();
+
+    switch (c) {
+
+      case 'n':
+        // node config
+        printConfig();
+
+        // node identity
+        Serial << F("> CBUS node configuration") << endl;
+        Serial << F("> mode = ") << (config.FLiM ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID << F(", node number = ") << config.nodeNum << endl;
+        Serial << endl;
+        break;
+
+      case 'e':
+        // EEPROM learned event data table
+        Serial << F("> stored events ") << endl;
+        Serial << F("  max events = ") << config.EE_MAX_EVENTS << F(" EVs per event = ") << config.EE_NUM_EVS << F(" bytes per event = ") << config.EE_BYTES_PER_EVENT << endl;
+
+        for (byte j = 0; j < config.EE_MAX_EVENTS; j++) {
+          if (config.getEvTableEntry(j) != 0) {
+            ++uev;
+          }
+        }
+
+        Serial << F("  stored events = ") << uev << F(", free = ") << (config.EE_MAX_EVENTS - uev) << endl;
+        Serial << F("  using ") << (uev * config.EE_BYTES_PER_EVENT) << F(" of ") << (config.EE_MAX_EVENTS * config.EE_BYTES_PER_EVENT) << F(" bytes") << endl << endl;
+
+        Serial << F("  Ev#  |  NNhi |  NNlo |  ENhi |  ENlo | ");
+
+        for (byte j = 0; j < (config.EE_NUM_EVS); j++) {
+          sprintf(msgstr, "EV%03d | ", j + 1);
+          Serial << msgstr;
+        }
+
+        Serial << F("Hash |") << endl;
+
+        Serial << F(" --------------------------------------------------------------") << endl;
+
+        // for each event data line
+        for (byte j = 0; j < config.EE_MAX_EVENTS; j++) {
+          if (config.getEvTableEntry(j) != 0) {
+            sprintf(msgstr, "  %03d  | ", j);
+            Serial << msgstr;
+
+            // for each data byte of this event
+            for (byte e = 0; e < (config.EE_NUM_EVS + 4); e++) {
+              sprintf(msgstr, " 0x%02hx | ", config.readEEPROM(config.EE_EVENTS_START + (j * config.EE_BYTES_PER_EVENT) + e));
+              Serial << msgstr;
+            }
+
+            sprintf(msgstr, "%4d |", config.getEvTableEntry(j));
+            Serial << msgstr << endl;
+          }
+        }
+
+        Serial << endl;
+
+        break;
+
+      // NVs
+      case 'v':
+        // note NVs number from 1, not 0
+        Serial << "> Node variables" << endl;
+        Serial << F("   NV   Val") << endl;
+        Serial << F("  --------------------") << endl;
+
+        for (byte j = 1; j <= config.EE_NUM_NVS; j++) {
+          byte v = config.readNV(j);
+          sprintf(msgstr, " - %02d : %3hd | 0x%02hx", j, v, v);
+          Serial << msgstr << endl;
+        }
+
+        Serial << endl << endl;
+
+        break;
+
+      // CAN bus status
+      case 'c':
+        CBUS.printStatus();
+        break;
+
+      case 'h':
+        // event hash table
+        config.printEvHashTable(false);
+        break;
+
+      case 'y':
+        // reset CAN bus and CBUS message processing
+        CBUS.reset();
+        break;
+
+      case '*':
+        // reboot
+        config.reboot();
+        break;
+
+      case 'm':
+        // free memory
+        Serial << F("> free SRAM = ") << config.freeSRAM() << F(" bytes") << endl;
+        break;
+
+      case 'r':
+        // renegotiate
+        CBUS.renegotiate();
+        break;
+
+      case 'z':
+        // Reset module, clear EEPROM
+        static bool ResetRq = false;
+        static unsigned long ResWaitTime;
+        if (!ResetRq) {
+          // start timeout timer
+          Serial << F(">Reset & EEPROM wipe requested. Press 'z' again within 2 secs to confirm") << endl;
+          ResWaitTime = millis();
+          ResetRq = true;
+        }
+        else {
+          // This is a confirmed request
+          // 2 sec timeout
+          if (ResetRq && ((millis() - ResWaitTime) > 2000)) {
+            Serial << F(">timeout expired, reset not performed") << endl;
+            ResetRq = false;
+          }
+          else {
+            //Request confirmed within timeout
+            Serial << F(">RESETTING AND WIPING EEPROM") << endl;
+            config.resetModule();
+            ResetRq = false;
+          }
+        }
+        break;
+
+      default:
+        // Serial << F("> unknown command ") << c << endl;
+        break;
+    }
+  }
+}
+
