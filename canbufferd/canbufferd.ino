@@ -13,9 +13,13 @@
   */
 /********************************************************************************************/
 
+#define DEBUG 1       // set to 0 for no serial debug
 
-
-
+#if DEBUG
+#define DEBUG_PRINT(S) Serial << S << endl
+#else
+#define DEBUG_PRINT(S)
+#endif
 
 /*
 All Libaries used can be downloaded from my Github account
@@ -41,15 +45,49 @@ VCC         5V
 // Load CBUS Libraries
 /********************************************************************************************/
 
-#include <SPI.h> //equired by the CBUS library to communicate to MCP2515 CAN Controller
-#include <MergCBUS.h> // Main CBUS Library
-#include <Message.h>  // CBUS Message Libary
-#include <EEPROM.h> //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
+//#include <SPI.h> //equired by the CBUS library to communicate to MCP2515 CAN Controller
+//#include <MergCBUS.h> // Main CBUS Library
+//#include <Message.h>  // CBUS Message Libary
+//#include <EEPROM.h> //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
 
+// 3rd party libraries
+#include <Streaming.h>
+
+// CBUS library header files
+#include <CBUS2515.h>            // CAN controller and CBUS class
+//#include "LEDControl.h"          // CBUS LEDs
+#include <CBUSconfig.h>          // module configuration
+#include <cbusdefs.h>            // MERG CBUS constants
+#include <CBUSParams.h>
 
 /********************************************************************************************/
 
+// module name
+unsigned char mname[7] = { 'B', 'U', 'F', 'F', 'E', 'R', 'D' };
 
+// constants
+const byte VER_MAJ = 2;         // code major version
+const char VER_MIN = ' ';       // code minor version
+const byte VER_BETA = 0;        // code beta sub-version
+const byte MODULE_ID = 75;      // CBUS module type 75 for CANGATE
+
+const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
+
+//////////////////////////////////////////////////////////////////////////
+
+//CBUS pins
+const byte CAN_INT_PIN = 2;  // Only pin 2 and 3 support interrupts
+const byte CAN_CS_PIN = 10;
+//const byte CAN_SI_PIN = 11;  // Cannot be changed
+//const byte CAN_SO_PIN = 12;  // Cannot be changed
+//const byte CAN_SCK_PIN = 13;  // Cannot be changed
+
+// CBUS objects
+CBUS2515 CBUS;                      // CBUS object
+CBUSConfig config;                  // configuration object
+
+CBUSLED ledGrn, ledYlw;             // LED objects
+CBUSSwitch pb_switch;               // switch object
 
 
 
@@ -57,13 +95,13 @@ VCC         5V
 //CBUS definitions
 /********************************************************************************************/
   #define GREEN_LED 4               //MERG Green (SLIM) LED port
-  #define YELLOW_LED 7              //MERG Yellow (FLIM) LED port
-  #define PUSH_BUTTON 8             //std merg FLIM / SLIM push button
+  #define YELLOW_LED 5              //MERG Yellow (FLIM) LED port
+  #define PUSH_BUTTON 6             //std merg FLIM / SLIM push button
  //#define PUSH_BUTTON1 3          //debug push button
   #define NODE_VARS 1      //sets up number of NVs for module to store variables
 
   #define NODE_EVENTS 128     //Max Number of supported Events is 255
-  #define EVENTS_VARS 20  //number of variables per event Maximum is 20
+  #define EVENTS_VARS 3  //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0  //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
 
 /********************************************************************************************/
@@ -75,30 +113,76 @@ VCC         5V
 /********************************************************************************************/
 //Variables
 /********************************************************************************************/
-bool nonInverting = 1;
+bool nonInverting = true;
 
-bool inverting = 1;
-
-
+bool inverting = true;
 
 
 /********************************************************************************************/
 
+//
+///  setup CBUS - runs once at power on called from setup()
+//
+void setupCBUS()
+{
+  // set config layout parameters
+  config.EE_NVS_START = 10;
+  config.EE_NUM_NVS = NODE_VARS;
+  config.EE_EVENTS_START = 50;
+  config.EE_MAX_EVENTS = NODE_EVENTS;
+  config.EE_NUM_EVS = EVENTS_VARS;
+  config.EE_BYTES_PER_EVENT = (config.EE_NUM_EVS + 4);
 
+  // initialise and load configuration
+  config.setEEPROMtype(EEPROM_INTERNAL);
+  config.begin();
+
+
+  Serial << F("> mode = ") << ((config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID;
+  Serial << F(", NN = ") << config.nodeNum << endl;
+
+  // show code version and copyright notice
+  printConfig();
+
+  // set module parameters
+  CBUSParams params(config);
+  params.setVersion(VER_MAJ, VER_MIN, VER_BETA);
+  params.setModuleId(MODULE_ID);
+  params.setFlags(PF_FLiM | PF_COMBI);
+
+  // assign to CBUS
+  CBUS.setParams(params.getParams());
+  CBUS.setName(mname);
+
+  // register our CBUS event handler, to receive event messages of learned events
+  CBUS.setEventHandler(eventhandler);
+
+  // set LED and switch pins and assign to CBUS
+  ledGrn.setPin(GREEN_LED);
+  ledYlw.setPin(YELLOW_LED);
+  CBUS.setLEDs(ledGrn, ledYlw);
+  CBUS.setSwitch(pb_switch);
+
+  // set CBUS LEDs to indicate mode
+  CBUS.indicateMode(config.FLiM);
+
+  // configure and start CAN bus and CBUS message processing
+  CBUS.setNumBuffers(2);         // more buffers = more memory used, fewer = less
+  CBUS.setOscFreq(CAN_OSC_FREQ);   // select the crystal frequency of the CAN module
+  CBUS.setPins(CAN_CS_PIN, CAN_INT_PIN);           // select pins for CAN bus CE and interrupt connections
+  CBUS.begin();
+}
 
 
 /********************************************************************************************/
 //Create the MERG CBUS object - cbus
 /********************************************************************************************/
 
-MergCBUS cbus=MergCBUS(NODE_VARS,NODE_EVENTS,EVENTS_VARS,DEVICE_NUMBERS);
+//MergCBUS cbus=MergCBUS(NODE_VARS,NODE_EVENTS,EVENTS_VARS,DEVICE_NUMBERS);
 
 /********************************************************************************************/
 
-
-
-MergNodeIdentification MergNode=MergNodeIdentification();
-
+//MergNodeIdentification MergNode=MergNodeIdentification();
 
 void setup () {
 
