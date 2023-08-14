@@ -491,7 +491,7 @@ void eventhandler(byte index, CANFrame *msg)
    //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
    
    bool isAccOn  = ((CBUSOpc == OPC_ACON) || (CBUSOpc == OPC_ASON) );
-   bool isAccOff = ((CBUSOpc == OPC_ACOF) || (CBUSOpc == OPC_ASOF) );
+   bool isAccOff = ((CBUSOpc == OPC_ACOF) || (CBUSOpc == OPC_ASOF) ); 
 
      
    // This is not needed as only taught events are seen here
