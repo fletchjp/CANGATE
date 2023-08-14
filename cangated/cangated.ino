@@ -100,7 +100,7 @@ CBUSSwitch pb_switch;               // switch object
   //#define PUSH_BUTTON1 7          //debug push button
   #define NODE_VARS 1               //sets up number of NVs for module to store variables
   #define NODE_EVENTS 136           //Max Number of supported Events
-  #define EVENTS_VARS 20            //number of variables per event Maximum is 20
+  #define EVENTS_VARS 5             //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
 
 //
