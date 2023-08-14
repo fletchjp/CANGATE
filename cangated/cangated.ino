@@ -284,7 +284,8 @@ int invert; // used to invert output event
 
 void setup () {
   Serial.begin (115200);
-  Serial << endl << endl << F("> ** CANGATE ** ") << __FILE__ << endl;
+  Serial << endl << endl << F("> ** CANGATED ** ") << __FILE__ << endl;
+  Serial << F("> This version uses the ArduinoCBUS libraries") << endl;
 
   setupCBUS();
 
@@ -357,6 +358,8 @@ void setup () {
     logicEventNumber[i] = i*10;
   }
 
+  // end of setup
+  DEBUG_PRINT(F("> ready"));
 
 } // End Of Set Up
 
