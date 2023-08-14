@@ -302,17 +302,32 @@ bool sendOffEvent(bool longEvent, unsigned int eventNo)
 }
 
 
+//
+/// called from the CBUS library when a learned event is received
+//
+void eventhandler(byte index, CANFrame *msg)
+{
+  byte CBUSOpc = msg->data[0];
 
-void myUserFunc(Message *msg,MergCBUS *mcbus){
+  DEBUG_PRINT(F("> event handler: index = ") << index << F(", opcode = 0x") << _HEX(msg->data[0]));
+  DEBUG_PRINT(F("> event handler: length = ") << msg->len);
+
+  unsigned int nodeNumber = (msg->data[1] << 8 ) + msg->data[2];
+  unsigned int eventNumber = (msg->data[3] << 8 ) + msg->data[4];
+  DEBUG_PRINT(F("> NN = ") << nodeNumber << F(", EN = ") << eventNumber);
+  DEBUG_PRINT(F("> op_code = ") << CBUSOpc);
+
+//void myUserFunc(Message *msg,MergCBUS *mcbus){
   
+  bool isAccOn  = ((CBUSOpc == OPC_ACON) || (CBUSOpc == OPC_ASON) );
+  bool isAccOff = ((CBUSOpc == OPC_ACOF) || (CBUSOpc == OPC_ASOF) );
+
   // byte CBUSOpc = msg->getOpc(); // Get The OPCODE from Message
    //int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
-   int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
-   int eventVariable1 = mcbus->getEventVar(msg,1);
-       
-      
+   //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
+   int eventVariable1 = config.getEventEVval(index, 1); //mcbus->getEventVar(msg,1);
    
-   if (mcbus->eventMatch()){  //The recived event has been taught this module
+   //if (mcbus->eventMatch()){  //The recived event has been taught this module
 
                     if (nonInverting==1){
                      if (mcbus->isAccOn()== true){
@@ -342,7 +357,7 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
        }
                   
             
-        } // End OF Recieved Events
+        //} // End OF Recieved Events
           
     
            
