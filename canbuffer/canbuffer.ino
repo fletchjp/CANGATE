@@ -42,7 +42,7 @@ VCC         5V
 #include <SPI.h> //equired by the CBUS library to communicate to MCP2515 CAN Controller
 #include <MergCBUS.h> // Main CBUS Library
 #include <Message.h>  // CBUS Message Libary
-#include <EEPROM.h> //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
+//#include <EEPROM.h> //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
 
 
 /********************************************************************************************/
@@ -152,6 +152,8 @@ void setup () {
 //  Functions
 /********************************************************************************************/
 
+// How to get a Node variable (NV)
+//byte what = cbus.getNodeVar(byte varIndex);
 
 
 void myUserFunc(Message *msg,MergCBUS *mcbus){
@@ -161,7 +163,9 @@ void myUserFunc(Message *msg,MergCBUS *mcbus){
    int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
    int eventVariable1 = mcbus->getEventVar(msg,1);
        
-      
+   // How to get a Node variable (NV)
+   byte what = cbus.getNodeVar(1); /*byte varIndex*/
+   
    
    if (mcbus->eventMatch()){  //The recived event has been taught this module
 
