@@ -65,7 +65,7 @@ VCC         		5V
 ////////////DEFINE MODULE/////////////////////////////////////////////////
 
 // module name
-unsigned char mname[7] = { 'G', 'A', 'T', 'E', 'D', ' ', ' ' };
+const unsigned char mname[7] = { 'G', 'A', 'T', 'E', 'D', ' ', ' ' };
 
 // constants
 const byte VER_MAJ = 2;         // code major version
