@@ -251,7 +251,8 @@ void setup () {
   //Note the clock speed 8Mhz. If 16Mhz crystal fitted change above to MCP_16Mhz
 /********************************************************************************************/
 
-
+  // end of setup
+  DEBUG_PRINT(F("> ready"));
 
 } // End Of Set Up
 
