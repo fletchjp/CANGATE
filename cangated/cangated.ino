@@ -111,7 +111,7 @@ void setupCBUS()
 {
   // set config layout parameters
   config.EE_NVS_START = 10;
-  config.EE_NUM_NVS = NODE_VARS;
+  config.EE_NUM_NVS = NODE_VARS; 
   config.EE_EVENTS_START = 50;
   config.EE_MAX_EVENTS = NODE_EVENTS;
   config.EE_NUM_EVS = EVENTS_VARS;
@@ -123,6 +123,12 @@ void setupCBUS()
   unsigned int EEPROM_needed = config.EE_EVENTS_START + 
               (config.EE_BYTES_PER_EVENT * config.EE_MAX_EVENTS);
   Serial << F("> EEPROM required is ") << EEPROM_needed << endl;
+  if (EEPROM_needed < EEPROM.length()) {
+    Serial << F("> There is enough EEPROM for this case") << endl;
+  } else {
+    Serial << F("**** WARNING There is NOT enough EEPROM for this case ****") << endl;
+  }
+
   Serial << F("> mode = ") << ((config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID;
   Serial << F(", NN = ") << config.nodeNum << endl;
 
