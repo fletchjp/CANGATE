@@ -253,6 +253,8 @@ void setup () {
 
 } // End Of Set Up
 
+// How to get a Node variable (NV)
+//byte what = cbus.getNodeVar(byte varIndex);
 
 // The idea of these routines is to remove the direct use of cbus
 // to a small number of locations.
