@@ -543,4 +543,3 @@ void processSerialInput(void)
     }
   }
 }
-
