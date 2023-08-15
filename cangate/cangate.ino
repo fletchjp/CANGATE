@@ -35,10 +35,11 @@ VCC         		5V
 // Load CBUS Libraries
 /********************************************************************************************/
 
-#include <SPI.h>        //equired by the CBUS library to communicate to MCP2515 CAN Controller
+// The other libraries are included by MergCBUS.h
+//#include <SPI.h>        //equired by the CBUS library to communicate to MCP2515 CAN Controller
 #include <MergCBUS.h>  // Main CBUS Library
-#include <Message.h>   // CBUS Message Libary
-#include <EEPROM.h>   //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
+//#include <Message.h>   // CBUS Message Libary
+//#include <EEPROM.h>   //Required by the CBUS library to read / write Node Identifiction and Node Varaiables
 
 
 /********************************************************************************************/
