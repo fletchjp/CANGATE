@@ -52,6 +52,7 @@ VCC         5V
 
 // 3rd party libraries
 #include <Streaming.h>
+#include <EEPROM.h>   //Required to check EEPROM size
 
 // CBUS library header files
 #include <CBUS2515.h>            // CAN controller and CBUS class
@@ -136,7 +137,14 @@ void setupCBUS()
   // initialise and load configuration
   config.setEEPROMtype(EEPROM_INTERNAL);
   config.begin();
-
+  unsigned int EEPROM_needed = config.EE_EVENTS_START + 
+              (config.EE_BYTES_PER_EVENT * config.EE_MAX_EVENTS);
+  Serial << F("> EEPROM required is ") << EEPROM_needed << endl;
+  if (EEPROM_needed < EEPROM.length()) {
+    Serial << F("> There is enough EEPROM for this case") << endl;
+  } else {
+    Serial << F("**** WARNING There is NOT enough EEPROM for this case ****") << endl;
+  }
 
   Serial << F("> mode = ") << ((config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID;
   Serial << F(", NN = ") << config.nodeNum << endl;
@@ -189,6 +197,7 @@ void setup () {
   Serial.begin (115200);
   Serial << endl << endl << F("> ** CANBUFFERD ** ") << __FILE__ << endl;
   Serial << F("> This version uses the ArduinoCBUS libraries") << endl;
+  Serial << F("> EEPROM available is ") << EEPROM.length() << endl;
 
   setupCBUS();
 
