@@ -120,7 +120,9 @@ void setupCBUS()
   // initialise and load configuration
   config.setEEPROMtype(EEPROM_INTERNAL);
   config.begin();
-
+  unsigned int EEPROM_needed = config.EE_EVENTS_START + 
+              (config.EE_BYTES_PER_EVENT * config.EE_MAX_EVENTS);
+  Serial << F("> EEPROM required is ") << EEPROM_needed << endl;
   Serial << F("> mode = ") << ((config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << config.CANID;
   Serial << F(", NN = ") << config.nodeNum << endl;
 
