@@ -51,6 +51,7 @@ VCC         		5V
 
 // 3rd party libraries
 #include <Streaming.h>
+#include <EEPROM.h>   //Required to check EEPROM size
 
 // CBUS library header files
 #include <CBUS2515.h>            // CAN controller and CBUS class
@@ -286,6 +287,7 @@ void setup () {
   Serial.begin (115200);
   Serial << endl << endl << F("> ** CANGATED ** ") << __FILE__ << endl;
   Serial << F("> This version uses the ArduinoCBUS libraries") << endl;
+  Serial << F("> EEPROM available is ") << EEPROM.length() << endl;
 
   setupCBUS();
 
