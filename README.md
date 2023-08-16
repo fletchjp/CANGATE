@@ -60,6 +60,8 @@ I have not tested these other than to confirm that they compile. I need to sort 
 
 I have still to talk to Phil Silver to check what the actual requirements are.
 
+I have still to do testing with the FCU.
+
 
 John Fletcher <M6777> August 2023
 
