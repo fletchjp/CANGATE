@@ -24,13 +24,45 @@ This new version uses DuncanGreenwood's ArduinoCBUS library instead of the MergC
 
 This provides the alternative way of making the FLiM/SLiM change for FCU using the Arduino serial monitor. This means the code could be run on other hardware.
 
-The code for working with LEDs and a push button is also available.
+The code for working with LEDs and a push button is also available. 
 
 Details of how this works are in the README file for CANmINnOUT which can be found here: 
 
 https://github.com/MartinDaCosta53/CANmINnOUT
 
+### canbuffer
+
+This has had the same treatment (sort of) as I did for cangate, though the changes are much less.
+
+I think what I have from Phil is not the latest version as his code does not do the trick of changing the output event number. I have attempted to add that.
+
+### canbufferd
+
+This is the version of canbuffer using the ArduinoCBUS library, with similar changes to those in cangated.
+
+## Testing
+
+### cangated and canbufferd
+
+I have tested cangated and canbufferd without a CBUS connection using the serial monitor to check what is happening.
+
+My initial tests showed that the parameters used in CANGATE did not work with cangated as it is asking for more than the 1024 bytes of EEPROM available in a NANO or UNO.
+
+I reduced the requirec EVs to 3 from 20 (as only 3 are used in CANGATE) and also reduced the number of events to 128. This reduces the EEPROM size to 946.
+
+I have put lines in the output to the serial monitor to report the calculations.
+
+### cangate and canbuffer
+
+I have not tested these other than to confirm that they compile. I need to sort out hardware with push button and LEDs.
+
+## Actions 
+
+I have still to talk to Phil Silver to check what the actual requirements are.
+
+
 John Fletcher <M6777> August 2023
 
-P.S. I have not adjusted the version number.
+P.S. I have not adjusted the version number or the modile ID value.
+
 
