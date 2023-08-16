@@ -338,9 +338,10 @@ void eventhandler(byte index, CANFrame *msg)
     int eventVariable1 = config.getEventEVval(index, 1); //mcbus->getEventVar(msg,1);
     int eventVariable2 = config.getEventEVval(index, 2); //mcbus->getEventVar(msg,1);
   
-    // New code for eventfactor 
+    byte nodeVariable1 = config.readNV(1); 
+    // New code for eventfactor using NV(1). Experimental
     unsigned int eventFactor = 1;
-    if (eventVariable2 > 0 && eventVariable2 < 11) eventFactor = eventVariable2;
+    if (nodeVariable1 > 1 && nodeVariable1 < 11) eventFactor = nodeVariable1;
     unsigned int eventNumberOut = eventNumber*eventFactor;
 
    //if (mcbus->eventMatch()){  //The recived event has been taught this module
