@@ -13,6 +13,17 @@
   */
 /********************************************************************************************/
 
+////////////////////////////////////////////////////////////////////////////////////
+// #define USE_CS_15 Not needed here
+// NOTE: The CS pin for CAN has to be changed from 10 to 15 as 10 is used by the lcd.
+
+// IMPORTANT: The external MCP2515 boards use 8Mhz
+//            The CBUS shield uses 16Mhz
+// Define this for the external board. This code must be compiled separately for each option.
+// This applies to Phil's board
+//#define USE_EXTERNAL_MCP2515
+////////////////////////////////////////////////////////////////////////////////////
+
 #define DEBUG 1       // set to 0 for no serial debug
 
 #if DEBUG
@@ -72,7 +83,11 @@ const char VER_MIN = ' ';       // code minor version
 const byte VER_BETA = 0;        // code beta sub-version
 const byte MODULE_ID = 75;      // CBUS module type 75 for CANGATE
 
+#ifdef USE_EXTERNAL_MCP2515
 const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
+#else
+const unsigned long CAN_OSC_FREQ = 16000000;     // Oscillator frequency on the CAN2515 shield
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 
