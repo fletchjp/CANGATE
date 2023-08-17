@@ -372,7 +372,7 @@ void eventhandler(byte index, CANFrame *msg)
                     if (!nonInverting){ 
                       if (isAccOff) {
                          sendOffEvent(true, eventNumberOut);
-                         nonInverting=false;
+                         nonInverting=true;
                        }
                     }
 
@@ -385,7 +385,7 @@ void eventhandler(byte index, CANFrame *msg)
                     if (!inverting){
                        if (isAccOff) {
                         sendOnEvent(true, eventNumber);
-                        inverting=false;
+                        inverting=true;
                        }
                     }
               }
