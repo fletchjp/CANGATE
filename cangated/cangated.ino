@@ -73,7 +73,11 @@ const char VER_MIN = ' ';       // code minor version
 const byte VER_BETA = 0;        // code beta sub-version
 const byte MODULE_ID = 75;      // CBUS module type 75 for CANGATE
 
+#ifdef USE_EXTERNAL_MCP2515
 const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
+#else
+const unsigned long CAN_OSC_FREQ = 16000000;     // Oscillator frequency on the CAN2515 shield
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 
