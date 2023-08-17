@@ -16,6 +16,16 @@
 
 
 /*
+////////////////////////////////////////////////////////////////////////////////////
+#define USE_CS_15
+// NOTE: The CS pin for CAN has to be changed from 10 to 15 as 10 is used by the lcd.
+
+// IMPORTANT: The external MCP2515 boards use 8Mhz
+//            The CBUS shield uses 16Mhz
+// Define this for the external board. This code must be compiled separately for each option.
+// This applies to Phil's board
+//#define USE_EXTERNAL_MCP2515
+////////////////////////////////////////////////////////////////////////////////////
 
 
 Pins used for interface chip
@@ -83,7 +93,11 @@ const unsigned long CAN_OSC_FREQ = 16000000;     // Oscillator frequency on the 
 
 //CBUS pins
 const byte CAN_INT_PIN = 2;  // Only pin 2 and 3 support interrupts
-const byte CAN_CS_PIN = 10;
+#ifdef USE_CS_15
+const byte CAN_CS_PIN = 15;  // For hardware with display only - normally 10
+#else
+const byte CAN_CS_PIN = 10;  // Normally 10
+#endif
 //const byte CAN_SI_PIN = 11;  // Cannot be changed
 //const byte CAN_SO_PIN = 12;  // Cannot be changed
 //const byte CAN_SCK_PIN = 13;  // Cannot be changed
