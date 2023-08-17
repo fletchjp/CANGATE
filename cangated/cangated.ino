@@ -98,11 +98,13 @@ CBUSSwitch pb_switch;               // switch object
   #define GREEN_LED 4               //MERG Green (SLIM) LED port
   #define YELLOW_LED 5              //MERG Yellow (FLIM) LED port
   #define PUSH_BUTTON 6             //std merg FLIM / SLIM push button
+  //#define HAS_BUTTON 1            // Define this if there is a button
   //#define PUSH_BUTTON1 7          //debug push button
   #define NODE_VARS 1               //sets up number of NVs for module to store variables
   #define NODE_EVENTS 128           //Max Number of supported Events
   #define EVENTS_VARS 3             //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
+
 
 //
 ///  setup CBUS - runs once at power on called from setup()
@@ -302,13 +304,14 @@ void setup () {
   pb_switch.setPin(PUSH_BUTTON, LOW);
   Serial << F("> Switch set to go LOW when pressed") << endl;
 
+#ifdef HAS_BUTTON
   if (pb_switch.isPressed() && !config.FLiM) {
 //#if DEBUG
     Serial << F("> switch was pressed at startup in SLiM mode") << endl;
 //#endif
     config.resetModule(ledGrn, ledYlw, pb_switch);
   }
-
+#endif
 
 /********************************************************************************************/
 //Configuration CBUS data for the node
