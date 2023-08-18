@@ -421,20 +421,21 @@ void twoInputAndGate(int ev1,int in1,int in2)
          if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOnEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
-              }
-              if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                  sendOffEvent(true, logicEventNumber[21]);
-                  sendEvent[ev1] = 0;
-                  }
+         }
+         if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
+                sendOffEvent(true, logicEventNumber[21]);
+                sendEvent[ev1] = 0;
+         }
                   
-           else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
+         /*else*/ // This was an error.
+         if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                     sendOffEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
-                    }
-              else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
+         }
+         else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                       sendOnEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
-                    }
+         }
 }
 
 void threeInputAndGate(int ev1,int in1,int in2,int in3)
