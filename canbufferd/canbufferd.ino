@@ -128,11 +128,12 @@ CBUSSwitch pb_switch;               // switch object
 
 
 /********************************************************************************************/
-//Variables
+//Variables made into arrays, one per event.
+//Use EV2 to choose which one to use.
 /********************************************************************************************/
-bool nonInverting = true;
+bool nonInverting[NODE_EVENTS];
 
-bool inverting = true;
+bool inverting[NODE_EVENTS];
 
 
 /********************************************************************************************/
@@ -233,7 +234,7 @@ void setup () {
 /********************************************************************************************/
 //Configuration CBUS data for the node
 /********************************************************************************************/
-
+  
 /*
   cbus.getNodeId()->setNodeName("CANBUFF",7);       //node name shows in FCU when first detected set your own name for each module - max 8 characters
   cbus.getNodeId()->setModuleId(129);               //module number - set above 100 to avoid conflict with other MERG CBUS modules
@@ -252,8 +253,10 @@ void setup () {
   cbus.setStdNN(999);                               // Node Number in SLIM Mode. The default is 0 for Consumers or 1 - 99 for Producers.
 */
 
- 
-
+  for (unsigned int i = 0; i < NODE_EVENTS; i++) {
+     inverting[i] = true;
+     nonInverting[i] = true;
+  }
 
 
 /********************************************************************************************/
@@ -363,29 +366,29 @@ void eventhandler(byte index, CANFrame *msg)
 
    //if (mcbus->eventMatch()){  //The recived event has been taught this module
 
-                    if (nonInverting){
+                    if (nonInverting[eventVariable2]){
                       if (isAccOn){
                         sendOnEvent(true, eventNumberOut);
-                        nonInverting=false;
+                        nonInverting[eventVariable2]=false;
                       }
                     }
-                    if (!nonInverting){ 
+                    if (!nonInverting[eventVariable2]){ 
                       if (isAccOff) {
                          sendOffEvent(true, eventNumberOut);
-                         nonInverting=true;
+                         nonInverting[eventVariable2]=true;
                        }
                     }
 
               if (eventVariable1 == 255){
-                    inverting=true;
+                    inverting[eventVariable2]=true;
                     if (isAccOn){
                         sendOffEvent(true, eventNumberOut);
-                        inverting=false;
+                        inverting[eventVariable2]=false;
                         }
-                    if (!inverting){
+                    if (!inverting[eventVariable2]){
                        if (isAccOff) {
                         sendOnEvent(true, eventNumber);
-                        inverting=true;
+                        inverting[eventVariable2]=true;
                        }
                     }
               }
