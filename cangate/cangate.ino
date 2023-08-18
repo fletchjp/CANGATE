@@ -56,8 +56,8 @@ VCC         		5V
   #define PUSH_BUTTON 6             //std merg FLIM / SLIM push button
   //#define PUSH_BUTTON1 7          //debug push button
   #define NODE_VARS 1               //sets up number of NVs for module to store variables
-  #define NODE_EVENTS 136           //Max Number of supported Events
-  #define EVENTS_VARS 20            //number of variables per event Maximum is 20
+  #define NODE_EVENTS 128           //Max Number of supported Events
+  #define EVENTS_VARS 3             //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
 
 /********************************************************************************************/
@@ -276,7 +276,7 @@ bool sendOffEvent(bool longEvent, unsigned int eventNo)
 
 void twoInputAndGate(int ev1,int in1,int in2)
 {
-         if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
+              if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOnEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
               }
@@ -285,14 +285,15 @@ void twoInputAndGate(int ev1,int in1,int in2)
                 sendEvent[ev1] = 0;
               }
                   
-           else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
+           /*else*/
+              if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                       sendOffEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
-                    }
+              }
               else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                       sendOnEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
-                    }
+              }
 }
 
 void threeInputAndGate(int ev1,int in1,int in2,int in3)
@@ -306,7 +307,8 @@ void threeInputAndGate(int ev1,int in1,int in2,int in3)
                         sendEvent[ev1] = 0;
                   } 
                     
-               else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
+               /*else*/
+                  if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
                         sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
@@ -327,7 +329,8 @@ void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
                         sendEvent[ev1] = 0;
                   } 
                     
-               else if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
+               /*else*/
+                 if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
                         sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
@@ -348,7 +351,8 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
                   sendEvent[ev1] = 0;
                  }
                  
-                  else if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
+                /*else*/
+                 if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
                               sendOffEvent(true, logicEventNumber[ev1]);
                               sendEvent[ev1] = 1; 
                  } 
