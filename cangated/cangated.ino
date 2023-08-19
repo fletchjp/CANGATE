@@ -423,7 +423,7 @@ void twoInputAndGate(int ev1,int in1,int in2)
                 sendEvent[ev1] = 0;
          }
          if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
-                sendOffEvent(true, logicEventNumber[21]);
+                sendOffEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
          }
                   
