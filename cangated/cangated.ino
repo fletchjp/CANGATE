@@ -427,7 +427,6 @@ void twoInputAndGate(int ev1,int in1,int in2)
                 sendEvent[ev1] = 0;
          }
                   
-         /*else*/ // This was an error.
          if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                     sendOffEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
@@ -440,21 +439,20 @@ void twoInputAndGate(int ev1,int in1,int in2)
 
 void threeInputAndGate(int ev1,int in1,int in2,int in3)
 {
-                if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
+                  if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
                     sendOnEvent(true, logicEventNumber[ev1]);
                     sendEvent[ev1] = 0;
                   }
-                   if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
+                  if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1 && rxEvent[in3] == 1){    
                         sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 0;
                   } 
                     
-               /*else */ 
                   if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
                         sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
                   }
-                 else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
+                  else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0)) {
                           sendOnEvent(true, logicEventNumber[ev1]);
                           sendEvent[ev1] = 1; 
                   }     
@@ -471,7 +469,6 @@ void fourInputAndGate(int ev1,int in1,int in2,int in3,int in4)
                         sendEvent[ev1] = 0;
                   } 
                     
-               /*else */
                   if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0 || rxEvent[in3] == 0 || rxEvent[in4] == 0)) {
                         sendOffEvent(true, logicEventNumber[ev1]);
                         sendEvent[ev1] = 1; 
@@ -493,8 +490,7 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
                   sendEvent[ev1] = 0;
                  }
                  
-                  /*else */ 
-                  if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
+                 if (invert != ev1 && sendEvent[ev1] == 0 && rxEvent[in1] == 0 && rxEvent[in2] == 0 && rxEvent[in3] == 0 && rxEvent[in4] == 0){
                             sendOffEvent(true, logicEventNumber[ev1]);
                             sendEvent[ev1] = 1; 
                  } 
