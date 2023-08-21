@@ -128,7 +128,7 @@ CBUSSwitch pb_switch;               // switch object
 
 #ifdef CONSUME_OWN_EVENTS
 byte nopcodes = 4;
-const byte opcodes[] PROGMEM = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
+const byte opcodes[] = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
 #endif
 
 //
@@ -536,11 +536,20 @@ void framehandler(CANFrame *msg) {
        Serial << F(" 0x") << _HEX(opcodes[i]);
     }
     Serial << F(" ]") << endl;
-  #endif
   }
+  byte CBUSOpc = msg->data[0];
+  unsigned int nodeNumber = (msg->data[1] << 8 ) + msg->data[2];
+  unsigned int eventNumber = (msg->data[3] << 8 ) + msg->data[4];
+  DEBUG_PRINT(F("> NN = ") << nodeNumber << F(", EN = ") << eventNumber);
+  DEBUG_PRINT(F("> op_code = ") << CBUSOpc);
+  if (nodeNumber == config.nodeNum) {
+    DEBUG_PRINT(F("> Event from this node"));
+  }
+#endif // DEBUG
 
 }
-#endif
+#endif // CONSUME_OWN_EVENTS
+
 //
 /// called from the CBUS library when a learned event is received
 //
