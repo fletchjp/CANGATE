@@ -27,7 +27,7 @@
 // This applies to Phil's board
 //#define USE_EXTERNAL_MCP2515
 ////////////////////////////////////////////////////////////////////////////////////
-
+#define CONSUME_OWN_EVENTS
 /*
 Pins used for interface chip
 
@@ -106,7 +106,9 @@ const byte CAN_CS_PIN = 10;  // Normally 10
 // CBUS objects
 CBUS2515 CBUS;                      // CBUS object
 CBUSConfig config;                  // configuration object
-
+#ifdef CONSUME_OWN_EVENTS
+CBUScoe coe(4);  // consume own events - buffer size = 4
+#endif
 CBUSLED ledGrn, ledYlw;             // LED objects
 CBUSSwitch pb_switch;               // switch object
 
@@ -169,6 +171,9 @@ void setupCBUS()
   // register our CBUS event handler, to receive event messages of learned events
   CBUS.setEventHandler(eventhandler);
 
+#ifdef CONSUME_OWN_EVENTS
+  CBUS.consumeOwnEvents(&coe);
+#endif
   // set LED and switch pins and assign to CBUS
   ledGrn.setPin(GREEN_LED);
   ledYlw.setPin(YELLOW_LED);
@@ -409,6 +414,9 @@ void printConfig(void)
   Serial << F("> © Duncan Greenwood (MERG M5767) 2021") << endl;
   Serial << F("> © John Fletcher (MERG M6777) 2023") << endl;
   Serial << F("> © Sven Rosvall (MERG M3777) 2021") << endl;
+#ifdef CONSUME_OWN_EVENTS
+  Serial << F("> Testing consuming own events") << endl;
+#endif
 }
 
 
@@ -766,9 +774,11 @@ bool sendAnEvent(byte opCode, unsigned int eventNo)
   msg.data[2] = lowByte(config.nodeNum);
   msg.data[3] = highByte(eventNo);
   msg.data[4] = lowByte(eventNo);
-
   bool success = CBUS.sendMessage(&msg);
   if (success) {
+#ifdef CONSUME_OWN_EVENTS
+    coe.put(&msg);
+#endif
     DEBUG_PRINT(F("> sent CBUS message with Event Number ") << eventNo);
   } else {
     DEBUG_PRINT(F("> error sending CBUS message"));
