@@ -126,6 +126,10 @@ CBUSSwitch pb_switch;               // switch object
   #define EVENTS_VARS 3             //number of variables per event Maximum is 20
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
 
+#ifdef CONSUME_OWN_EVENTS
+byte nopcodes = 4;
+const byte opcodes[] PROGMEM = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
+#endif
 
 //
 ///  setup CBUS - runs once at power on called from setup()
@@ -173,6 +177,7 @@ void setupCBUS()
 
 #ifdef CONSUME_OWN_EVENTS
   CBUS.consumeOwnEvents(&coe);
+  CBUS.setFrameHandler(framehandler,(byte *) opcodes, nopcodes);
 #endif
   // set LED and switch pins and assign to CBUS
   ledGrn.setPin(GREEN_LED);
@@ -509,6 +514,33 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
                  } 
 }
 
+
+#ifdef CONSUME_OWN_EVENTS
+// Converted to get an opcode array now done when calling SetFrameHandler.
+void framehandler(CANFrame *msg) {
+  // as an example, format and display the received frame
+
+#if DEBUG
+  Serial << F("[ ") << (msg->id & 0x7f) << F("] [") << msg->len << F("] [");
+  if ( msg->len > 0) {
+    for (byte d = 0; d < msg->len; d++) {
+      Serial << F(" 0x") << _HEX(msg->data[d]);
+    }
+  Serial << F(" ]") << endl;
+  }
+  
+  if (nopcodes > 0) {
+    Serial << F("Opcodes [ ");
+    for(byte i = 0;  i < nopcodes; i++)
+    {
+       Serial << F(" 0x") << _HEX(opcodes[i]);
+    }
+    Serial << F(" ]") << endl;
+  #endif
+  }
+
+}
+#endif
 //
 /// called from the CBUS library when a learned event is received
 //
