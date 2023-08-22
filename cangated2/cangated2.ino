@@ -549,7 +549,12 @@ void framehandler(CANFrame *msg) {
       DEBUG_PRINT(F("> Event not found in the table"));
       index = config.findEventSpace();
       DEBUG_PRINT(F("> Next free space is ") << index);
-    } 
+      config.writeEvent(index, msg->data[1]);
+      config.updateEvHashEntry(index);
+      DEBUG_PRINT(F("> Event written at ") << index);
+    } else {
+      DEBUG_PRINT(F("> Event found in the table as entry ") << index);
+    }
   }
 #endif // DEBUG
 
