@@ -519,7 +519,7 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 // Converted to get an opcode array now done when calling SetFrameHandler.
 void framehandler(CANFrame *msg) {
   // as an example, format and display the received frame
-
+  byte index;
 #if DEBUG
   Serial << F("[ ") << (msg->id & 0x7f) << F("] [") << msg->len << F("] [");
   if ( msg->len > 0) {
@@ -544,6 +544,12 @@ void framehandler(CANFrame *msg) {
   DEBUG_PRINT(F("> op_code = ") << CBUSOpc);
   if (nodeNumber == config.nodeNum) {
     DEBUG_PRINT(F("> Event from this node"));
+    index = config.findExistingEvent(nodeNumber, eventNumber);
+    if (index >= config.EE_MAX_EVENTS) {
+      DEBUG_PRINT(F("> Event not found in the table"));
+      index = config.findEventSpace();
+      DEBUG_PRINT(F("> Next free space is ") << index);
+    } 
   }
 #endif // DEBUG
 
