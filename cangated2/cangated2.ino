@@ -520,6 +520,7 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 void framehandler(CANFrame *msg) {
   // as an example, format and display the received frame
   byte index;
+  byte data[4];
 #if DEBUG
   Serial << F("[ ") << (msg->id & 0x7f) << F("] [") << msg->len << F("] [");
   if ( msg->len > 0) {
@@ -543,13 +544,17 @@ void framehandler(CANFrame *msg) {
   DEBUG_PRINT(F("> NN = ") << nodeNumber << F(", EN = ") << eventNumber);
   DEBUG_PRINT(F("> op_code = ") << CBUSOpc);
   if (nodeNumber == config.nodeNum) {
-    DEBUG_PRINT(F("> Event from this node"));
+    DEBUG_PRINT(F("> Event from this node ") << nodeNumber);
     index = config.findExistingEvent(nodeNumber, eventNumber);
     if (index >= config.EE_MAX_EVENTS) {
       DEBUG_PRINT(F("> Event not found in the table"));
       index = config.findEventSpace();
       DEBUG_PRINT(F("> Next free space is ") << index);
-      config.writeEvent(index, msg->data[1]);
+      data[0] = highByte(nodeNumber);
+      data[1] = lowByte(nodeNumber);
+      data[2] = highByte(eventNumber);
+      data[3] = lowByte(eventNumber);
+      config.writeEvent(index, data);
       config.updateEvHashEntry(index);
       DEBUG_PRINT(F("> Event written at ") << index);
     } else {
