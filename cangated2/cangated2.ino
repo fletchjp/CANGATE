@@ -576,8 +576,8 @@ void framehandler(CANFrame *msg) {
       if ((ev2 > 0) &&  (ev2 <= SEND_EVENT_VALUES)) {
         if (sendEvent[ev2]) DEBUG_PRINT(F("SendEvent True"));
         else {
-          DEBUG_PRINT(F("SendEvent False - set True"));
-          sendEvent[ev2] = 1;
+          DEBUG_PRINT(F("SendEvent False"));
+          //sendEvent[ev2] = 1; // Don't do this.
         }
       }
     }
