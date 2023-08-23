@@ -549,6 +549,9 @@ void framehandler(CANFrame *msg) {
     Serial << F(" ]") << endl;
   }
   byte CBUSOpc = msg->data[0];
+  bool isAccOn  = ((CBUSOpc == OPC_ACON) || (CBUSOpc == OPC_ASON) );
+  bool isAccOff = ((CBUSOpc == OPC_ACOF) || (CBUSOpc == OPC_ASOF) ); 
+
   unsigned int nodeNumber = (msg->data[1] << 8 ) + msg->data[2];
   unsigned int eventNumber = (msg->data[3] << 8 ) + msg->data[4];
   DEBUG_PRINT(F("> NN = ") << nodeNumber << F(", EN = ") << eventNumber);
@@ -574,11 +577,16 @@ void framehandler(CANFrame *msg) {
       ev3 = config.getEventEVval(index, 3);
       DEBUG_PRINT(F("> EVs are ") << ev1 << " " << ev2 << " " << ev3);
       if ((ev2 > 0) &&  (ev2 <= SEND_EVENT_VALUES)) {
-        if (sendEvent[ev2]) DEBUG_PRINT(F("SendEvent True"));
-        else {
+        if (sendEvent[ev2]) {
+          DEBUG_PRINT(F("SendEvent True"));
+          //sendOffEvent(true, logicEventNumber[ev2]);
+          if(isAccOn) sendEvent[ev2] = 0; 
+        } else {
           DEBUG_PRINT(F("SendEvent False"));
-          //sendEvent[ev2] = 1; // Don't do this.
-        }
+          //sendOffEvent(true, logicEventNumber[ev2]);
+          //sendEvent[ev2] = 1;
+          if(isAccOff) sendEvent[ev2] = 1; 
+       }
       }
     }
   }
@@ -866,12 +874,14 @@ bool sendAnEvent(byte opCode, unsigned int eventNo)
 
 bool sendOnEvent(bool longEvent, unsigned int eventNo)
 {
+   sendEvent[eventNo] = 0;
    if(longEvent) return sendAnEvent(OPC_ACON,eventNo);
    else return sendAnEvent(OPC_ASON,eventNo);
 }
 
 bool sendOffEvent(bool longEvent, unsigned int eventNo)
 {
+   sendEvent[eventNo] = 1;
    if(longEvent) return sendAnEvent(OPC_ACOF,eventNo);
    else return sendAnEvent(OPC_ASOF,eventNo);
 }
