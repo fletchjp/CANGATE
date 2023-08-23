@@ -166,7 +166,11 @@ void setupCBUS()
   CBUSParams params(config);
   params.setVersion(VER_MAJ, VER_MIN, VER_BETA);
   params.setModuleId(MODULE_ID);
+#ifdef CONSUME_OWN_EVENTS
+  params.setFlags(PF_FLiM | PF_COMBI | PF_COE);
+#else
   params.setFlags(PF_FLiM | PF_COMBI);
+#endif
 
   // assign to CBUS
   CBUS.setParams(params.getParams());
@@ -432,8 +436,13 @@ void printConfig(void)
 
 void twoInputAndGate(int ev1,int in1,int in2)
 {
+         if (ev1 == 25) {
+            DEBUG_PRINT(F("Processing Gate ") << ev1);
+            DEBUG_PRINT(sendEvent[ev1] << " " << rxEvent[in1] << " " << rxEvent[in2]);
+         }
          if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOnEvent(true, logicEventNumber[ev1]);
+                if (ev1 == 25) DEBUG_PRINT(F("Sent ON event ") << logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
          }
          if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
@@ -443,6 +452,7 @@ void twoInputAndGate(int ev1,int in1,int in2)
                   
          if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                     sendOffEvent(true, logicEventNumber[ev1]);
+                    if (ev1 == 25) DEBUG_PRINT(F("Sent OFF event ") << logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
          }
          else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
@@ -519,7 +529,7 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 // Converted to get an opcode array now done when calling SetFrameHandler.
 void framehandler(CANFrame *msg) {
   // as an example, format and display the received frame
-  byte index;
+  byte index, ev1, ev2, ev3;
   byte data[4];
 #if DEBUG
   Serial << F("[ ") << (msg->id & 0x7f) << F("] [") << msg->len << F("] [");
@@ -559,6 +569,17 @@ void framehandler(CANFrame *msg) {
       DEBUG_PRINT(F("> Event written at ") << index);
     } else {
       DEBUG_PRINT(F("> Event found in the table as entry ") << index);
+      ev1 = config.getEventEVval(index, 1);
+      ev2 = config.getEventEVval(index, 2);
+      ev3 = config.getEventEVval(index, 3);
+      DEBUG_PRINT(F("> EVs are ") << ev1 << " " << ev2 << " " << ev3);
+      if ((ev2 > 0) &&  (ev2 <= SEND_EVENT_VALUES)) {
+        if (sendEvent[ev2]) DEBUG_PRINT(F("SendEvent True"));
+        else {
+          DEBUG_PRINT(F("SendEvent False - set True"));
+          sendEvent[ev2] = 1;
+        }
+      }
     }
   }
 #endif // DEBUG
