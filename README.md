@@ -9,6 +9,8 @@
 
 ## Suggested modified versions
 
+NOTE: There is conditional compilation in the codes to allow for different oscillator values and also the presence or absence of the push button and LEDs.
+
 These should work the same as CANGATE although they have not yet been tested.
 
 ### cangate
@@ -29,6 +31,20 @@ The code for working with LEDs and a push button is also available.
 Details of how this works are in the README file for CANmINnOUT which can be found here: 
 
 https://github.com/MartinDaCosta53/CANmINnOUT
+
+### cangated2
+
+This is an extended version of cangated which is experimentally storing output messages into the table of taught messages. 
+
+This is done by having a framehandler routine which is set to look only at messages with on and off (short or long) opcodes. 
+
+It then checks the node number to see if it is the same as the module node number. 
+
+If so it checks to see if the node and event are already in the learned event table and if not it adds an entry.
+
+The events for the module have to be read into FCU to update the information in FCU.
+
+The new entry does not have event variables set. This can be done from FCU once there is an entry in the table.
 
 ### canbuffer
 
