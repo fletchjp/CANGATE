@@ -580,12 +580,12 @@ void framehandler(CANFrame *msg) {
         if (sendEvent[ev2]) {
           DEBUG_PRINT(F("SendEvent True"));
           //sendOffEvent(true, logicEventNumber[ev2]);
-          if(isAccOn) sendEvent[ev2] = 0; 
+          //if(isAccOn) sendEvent[ev2] = 0; 
         } else {
           DEBUG_PRINT(F("SendEvent False"));
           //sendOffEvent(true, logicEventNumber[ev2]);
           //sendEvent[ev2] = 1;
-          if(isAccOff) sendEvent[ev2] = 1; 
+          //if(isAccOff) sendEvent[ev2] = 1; 
        }
       }
     }
