@@ -175,7 +175,8 @@ void setupCBUS()
   // assign to CBUS
   CBUS.setParams(params.getParams());
   CBUS.setName(mname);
-
+  
+  void eventhandler(byte index, CANFrame *msg); // Advance declaration
   // register our CBUS event handler, to receive event messages of learned events
   CBUS.setEventHandler(eventhandler);
 
@@ -526,6 +527,7 @@ void fourInputOrGate(int ev1,int in1,int in2,int in3,int in4)
 }
 
 
+
 #ifdef CONSUME_OWN_EVENTS
 // Converted to get an opcode array now done when calling SetFrameHandler.
 void framehandler(CANFrame *msg) {
@@ -581,14 +583,17 @@ void framehandler(CANFrame *msg) {
         if (sendEvent[ev2]) {
           DEBUG_PRINT(F("SendEvent True"));
           //sendOffEvent(true, logicEventNumber[ev2]);
-          //if(isAccOn) sendEvent[ev2] = 0; 
+          //if(isAccOn)
+          //sendEvent[ev2] = 0; 
         } else {
           DEBUG_PRINT(F("SendEvent False"));
           //sendOffEvent(true, logicEventNumber[ev2]);
           //sendEvent[ev2] = 1;
-          //if(isAccOff) sendEvent[ev2] = 1; 
-       }
+          //if(isAccOff)
+          //sendEvent[ev2] = 1; 
+        }
       }
+      eventhandler(index,msg);
     }
   }
 #endif // DEBUG
