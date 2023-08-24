@@ -436,13 +436,14 @@ void printConfig(void)
 
 void twoInputAndGate(int ev1,int in1,int in2)
 {
-         if (ev1 == 25) {
+         bool test_output = (ev1 == 21) || (ev1 == 22) || (ev1 == 25);
+         if (test_output) {
             DEBUG_PRINT(F("Processing Gate ") << ev1);
             DEBUG_PRINT(sendEvent[ev1] << " " << rxEvent[in1] << " " << rxEvent[in2]);
          }
          if (invert != ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOnEvent(true, logicEventNumber[ev1]);
-                if (ev1 == 25) DEBUG_PRINT(F("Sent ON event ") << logicEventNumber[ev1]);
+                if (test_output) DEBUG_PRINT(F("Sent ON event ") << logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
          }
          if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
@@ -452,7 +453,7 @@ void twoInputAndGate(int ev1,int in1,int in2)
                   
          if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                     sendOffEvent(true, logicEventNumber[ev1]);
-                    if (ev1 == 25) DEBUG_PRINT(F("Sent OFF event ") << logicEventNumber[ev1]);
+                    if (test_output) DEBUG_PRINT(F("Sent OFF event ") << logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
          }
          else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
