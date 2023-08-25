@@ -591,12 +591,12 @@ void framehandler(CANFrame *msg) {
           DEBUG_PRINT(F("SendEvent False"));
           //sendOffEvent(true, logicEventNumber[ev2]);
           if (ev1 == ev3)
-            sendEvent[ev2] = 1;
+            sendEvent[ev2] = 0;
           else
             sendEvent[ev2] = 1; 
         }
+        eventhandler(index,msg);
       }
-      eventhandler(index,msg);
     }
   }
 #endif // DEBUG
