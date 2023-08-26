@@ -581,7 +581,8 @@ void framehandler(CANFrame *msg) {
       DEBUG_PRINT(F("> EVs are ") << ev1 << " " << ev2 << " " << ev3);
       if ((ev2 > 0) &&  (ev2 <= SEND_EVENT_VALUES)) {
         if (sendEvent[ev2]) {
-          DEBUG_PRINT(F("SendEvent True"));
+          if (ev1 == ev3) DEBUG_PRINT(F("SendEvent Inverted False"));
+          else DEBUG_PRINT(F("SendEvent True"));
           //sendOffEvent(true, logicEventNumber[ev2]);
           /*
           if (ev1 == ev3)
@@ -589,7 +590,8 @@ void framehandler(CANFrame *msg) {
           else 
             sendEvent[ev2] = 0; */ 
         } else {
-          DEBUG_PRINT(F("SendEvent False"));
+          if (ev1 == ev3) DEBUG_PRINT(F("SendEvent Inverted True"));
+          else DEBUG_PRINT(F("SendEvent False"));
           //sendOffEvent(true, logicEventNumber[ev2]);
           /* if (ev1 == ev3)
             sendEvent[ev2] = 0;
