@@ -370,19 +370,21 @@ void eventhandler(byte index, CANFrame *msg)
           eventVariable3 = 1;
        unsigned int i;
        for (i = 0; i < eventVariable3; i++) {
-           unsigned int eventNumberOut =  eventNumberOut0 + i;        
+           unsigned int eventNumberOut =  eventNumberOut0 + i;
+           bool last = (i+1 == eventVariable3);
+           DEBUG_PRINT(F("> Sending event number ") << eventNumberOut );     
    //if (mcbus->eventMatch()){  //The recived event has been taught this module
 
                     if (nonInverting[eventVariable2]){
                       if (isAccOn){
                         sendOnEvent(true, eventNumberOut);
-                        nonInverting[eventVariable2]=false;
+                        if (last) nonInverting[eventVariable2]=false;
                       }
                     }
                     if (!nonInverting[eventVariable2]){ 
                       if (isAccOff) {
                          sendOffEvent(true, eventNumberOut);
-                         nonInverting[eventVariable2]=true;
+                         if (last) nonInverting[eventVariable2]=true;
                        }
                     }
 
@@ -390,12 +392,12 @@ void eventhandler(byte index, CANFrame *msg)
                     inverting[eventVariable2]=true;
                     if (isAccOn){
                         sendOffEvent(true, eventNumberOut);
-                        inverting[eventVariable2]=false;
+                        if (last) inverting[eventVariable2]=false;
                         }
                     if (!inverting[eventVariable2]){
                        if (isAccOff) {
                         sendOnEvent(true, eventNumber);
-                        inverting[eventVariable2]=true;
+                        if (last) inverting[eventVariable2]=true;
                        }
                     }
               }
