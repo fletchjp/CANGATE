@@ -356,14 +356,21 @@ void eventhandler(byte index, CANFrame *msg)
    //int nodeNumber = msg->getNodeNumber(); // Get The Node Number from Message
    //int eventNumber = msg->getEventNumber(); // Get The Event Number from Message
     int eventVariable1 = config.getEventEVval(index, 1); //mcbus->getEventVar(msg,1);
-    int eventVariable2 = config.getEventEVval(index, 2); //mcbus->getEventVar(msg,1);
+    int eventVariable2 = config.getEventEVval(index, 2); //mcbus->getEventVar(msg,2);
+    unsigned int eventVariable3 = config.getEventEVval(index, 3); //mcbus->getEventVar(msg,3);
   
     byte nodeVariable1 = config.readNV(1); 
     // New code for eventfactor using NV(1). Experimental
     unsigned int eventFactor = 1;
     if (nodeVariable1 > 1 && nodeVariable1 < 11) eventFactor = nodeVariable1;
-    unsigned int eventNumberOut = eventNumber*eventFactor;
-
+    unsigned int eventNumberOut0 = eventNumber*eventFactor;
+    // New code to send multiple copies of an event depending on eventVariable3
+    // Default is to send one event only 
+       if (eventVariable3 == 0 || eventVariable3 > 4)
+          eventVariable3 = 1;
+       unsigned int i;
+       for (i = 0; i < eventVariable3; i++) {
+           unsigned int eventNumberOut =  eventNumberOut0 + i;        
    //if (mcbus->eventMatch()){  //The recived event has been taught this module
 
                     if (nonInverting[eventVariable2]){
@@ -393,7 +400,7 @@ void eventhandler(byte index, CANFrame *msg)
                     }
               }
                   
-            
+       }
         //} // End OF Recieved Events
           
     
