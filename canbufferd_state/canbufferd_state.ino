@@ -124,11 +124,14 @@ CBUSSwitch pb_switch;               // switch object
 
 /********************************************************************************************/
 
-byte nopcodes = 4;
-const byte opcodes[] = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
-
-
-
+// Request event opcodes.
+// It is possible to send long or short request events.
+// It makes more sense to send the short ones with a device number.
+// These are going to be received using a framehandler.
+// See example code in CANASIGNAL
+byte nopcodes = 2;
+const byte opcodes[] = {OPC_AREQ, OPC_ASRQ};
+ 
 
 /********************************************************************************************/
 //Variables made into arrays, one per event.
@@ -189,6 +192,9 @@ void setupCBUS()
 
   // register our CBUS event handler, to receive event messages of learned events
   CBUS.setEventHandler(eventhandler);
+
+  // This will only process the defined opcodes.
+  CBUS.setFrameHandler(framehandler, opcodes, nopcodes);
 
   // set LED and switch pins and assign to CBUS
   ledGrn.setPin(GREEN_LED);
@@ -432,9 +438,34 @@ void eventhandler(byte index, CANFrame *msg)
                 
 
 
+
 /*FUNCTIONS FINISH ***********************************************************************************/
 
 
+void framehandler(CANFrame *msg) {
+
+  byte op_code = msg->data[0];
+   // as an example, format and display the received frame
+
+  Serial << "[ " << (msg->id & 0x7f) << "] [" << msg->len << "] [";
+
+  for (byte d = 0; d < msg->len; d++) {
+    Serial << " 0x" << _HEX(msg->data[d]);
+  }
+
+  Serial << " ]" << endl;
+  unsigned int device_number = 512; // Placeholder.
+  // I think there has to be a device number base as an NV
+  // and then an offset into the learned event table. 
+  unsigned int event_number = (msg->data[3] << 8 ) + msg->data[4];
+  if (  op_code == OPC_ASRQ  && event_number == device_number) {
+         // Processing of request for the signal status.
+         // Returning with the device number which came in.
+    Serial << F("> processing  ASRQ with device number ") << device_number << endl;
+
+  }
+
+}
 
 void loop() {
 
