@@ -124,6 +124,8 @@ CBUSSwitch pb_switch;               // switch object
 
 /********************************************************************************************/
 
+byte nopcodes = 4;
+const byte opcodes[] = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
 
 
 
@@ -136,7 +138,7 @@ bool nonInverting[NODE_EVENTS];
 
 bool inverting[NODE_EVENTS];
 
-enum class Event_State { ON, OFF, UNKNOWN };
+enum class Event_State { OFF, ON, UNKNOWN };
 
 Event_State event_state[NODE_EVENTS];
 
