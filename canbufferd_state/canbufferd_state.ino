@@ -3,6 +3,8 @@
  /* CANBUFFER version using Duncan Greenwood's CBUS library
   * I have done this in such a way as to minimize changes to the event sending code.
   * New version starting to add state.
+  * At the moment the state of each incoming event is recorded.
+  * The next stage is to implement some way it can be queried.
   *******************************************************
   * Can be used in conjunction with CANGATE as an allternative way to produce a 'self consumed' event
   * Outputs of CANGATE can be fed into inputs
