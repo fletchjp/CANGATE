@@ -2,6 +2,7 @@
 /********************************************************************************************/
  /* CANBUFFER version using Duncan Greenwood's CBUS library
   * I have done this in such a way as to minimize changes to the event sending code.
+  * New version starting to add state.
   *******************************************************
   * Can be used in conjunction with CANGATE as an allternative way to produce a 'self consumed' event
   * Outputs of CANGATE can be fed into inputs
@@ -105,8 +106,6 @@ CBUSConfig config;                  // configuration object
 CBUSLED ledGrn, ledYlw;             // LED objects
 CBUSSwitch pb_switch;               // switch object
 
-
-
 /********************************************************************************************/
 //CBUS definitions
 /********************************************************************************************/
@@ -134,6 +133,11 @@ CBUSSwitch pb_switch;               // switch object
 bool nonInverting[NODE_EVENTS];
 
 bool inverting[NODE_EVENTS];
+
+enum class Event_State { ON, OFF, UNKNOWN };
+
+Event_State event_state[NODE_EVENTS];
+
 
 
 /********************************************************************************************/
@@ -256,6 +260,7 @@ void setup () {
   for (unsigned int i = 0; i < NODE_EVENTS; i++) {
      inverting[i] = true;
      nonInverting[i] = true;
+     event_state[i] = Event_State::UNKNOWN;
   }
 
 
@@ -378,13 +383,19 @@ void eventhandler(byte index, CANFrame *msg)
                     if (nonInverting[eventVariable2]){
                       if (isAccOn){
                         sendOnEvent(true, eventNumberOut);
-                        if (last) nonInverting[eventVariable2]=false;
+                        if (last) {
+                          event_state[eventVariable2] = Event_State::ON;
+                          nonInverting[eventVariable2]=false;
+                        }
                       }
                     }
                     if (!nonInverting[eventVariable2]){ 
                       if (isAccOff) {
                          sendOffEvent(true, eventNumberOut);
-                         if (last) nonInverting[eventVariable2]=true;
+                         if (last) {
+                           event_state[eventVariable2] = Event_State::OFF;
+                           nonInverting[eventVariable2]=true;
+                         }
                        }
                     }
 
@@ -392,13 +403,19 @@ void eventhandler(byte index, CANFrame *msg)
                     inverting[eventVariable2]=true;
                     if (isAccOn){
                         sendOffEvent(true, eventNumberOut);
-                        if (last) inverting[eventVariable2]=false;
+                        if (last) {
+                          event_state[eventVariable2] = Event_State::OFF;
+                          inverting[eventVariable2]=false;
                         }
+                    }
                     if (!inverting[eventVariable2]){
-                       if (isAccOff) {
+                      if (isAccOff) {
                         sendOnEvent(true, eventNumber);
-                        if (last) inverting[eventVariable2]=true;
-                       }
+                        if (last) {
+                          event_state[eventVariable2] = Event_State::ON;
+                          inverting[eventVariable2]=true;
+                        }
+                      }
                     }
               }
                   
