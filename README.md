@@ -1,4 +1,7 @@
 # CANGATE ver1b
+
+ This is the original README
+ 
  Two, Three or Four input AND 'gates'   Four input 0R 'gate' for CBUS Events.
   *  Also invert output event to cretae NAND and NOR
   *  No Arduino programming required - black box - similar to standard MERG CBUS kits
@@ -6,6 +9,8 @@
   *  Can use any Event on BUS - not Node Number or Event specific
   *  Input Events into 'gates' can be edited if wrongly added
   *  Copyright 2022 - Philip Silver MERG Member 4082
+
+NOTE: I beleive that the CANGATE and CANBUFFER codes released by Phil risk running out of EEPROM as they allocate 20 EVs per event and use 3.
 
 ## Suggested modified versions
 
@@ -55,6 +60,14 @@ I think what I have from Phil is not the latest version as his code does not do 
 ### canbufferd
 
 This is the version of canbuffer using the ArduinoCBUS library, with similar changes to those in cangated.
+
+This now has the ability to send more than one event from any input event.
+
+The idea is to allow for events from CANBUFFER to be used by more than one CANGATE buffer.
+
+This is implemented by a value in EV3 of between 2 and 5 (the maximum).
+
+For EV3 = 2 this means that an event 1 input will generate events 10 and 11 if the multiplier is set to 10.
 
 ## Testing
 
