@@ -129,8 +129,13 @@ CBUSSwitch pb_switch;               // switch object
 // It makes more sense to send the short ones with a device number.
 // These are going to be received using a framehandler.
 // See example code in CANASIGNAL
-byte nopcodes = 2;
-const byte opcodes[] = {OPC_AREQ, OPC_ASRQ};
+// There is also an opcode RQEVN which can be sent 
+// to ask for the number of events available.
+// I have added it here - no code for it yet.
+// The reply is sent as NUMEV.
+// This is used by FCU. I have not seen it used in code.
+byte nopcodes = 3;
+const byte opcodes[] = {OPC_AREQ, OPC_ASRQ, OPC_RQEVN};
  
 
 /********************************************************************************************/
