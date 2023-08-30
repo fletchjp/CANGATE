@@ -469,6 +469,10 @@ void framehandler(CANFrame *msg) {
     Serial << F("> processing  ASRQ with device number ") << device_number << endl;
 
   }
+  // Request for number of events stored - not being processed yet.
+  if (  op_code == OPC_RQEVN ) {
+    Serial << F("> seeing RQEVN"); 
+  }
 
 }
 
