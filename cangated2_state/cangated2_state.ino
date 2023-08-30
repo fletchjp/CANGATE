@@ -471,16 +471,19 @@ void twoInputAndGate(int ev1,int in1,int in2)
          if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOffEvent(true, logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
+                sendEvent_state[ev1] = Event_State::OFF;
          }
                   
          if (invert != ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                     sendOffEvent(true, logicEventNumber[ev1]);
                     if (test_output) DEBUG_PRINT(F("Sent OFF event ") << logicEventNumber[ev1]);
                     sendEvent[ev1] = 1; 
+                    sendEvent_state[ev1] = Event_State::OFF;
          }
          else if (invert == ev1 && sendEvent[ev1] == 0 && (rxEvent[in1] == 0 || rxEvent[in2] == 0)) {
                       sendOnEvent(true, logicEventNumber[ev1]);
                       sendEvent[ev1] = 1; 
+                      sendEvent_state[ev1] = Event_State::ON;
          }
 }
 
@@ -665,11 +668,13 @@ void eventhandler(byte index, CANFrame *msg)
 /********************************************************************************************/
          if(eventVariable1 > 0 && eventVariable1 <= INCOMING_EVENT1_VALUES) {
                      if (isAccOn){
-                        rxEvent[eventVariable1] = 1; 
+                          rxEvent[eventVariable1] = 1; 
+                          rxEvent_state[eventVariable1] = Event_State::ON;
                         }
                      else if (isAccOff) {
-                        rxEvent[eventVariable1] = 0;   
-                       }
+                          rxEvent[eventVariable1] = 0;   
+                          rxEvent_state[eventVariable1] = Event_State::OFF;
+                        }
          }
       
 /********************************************************************************************/         
