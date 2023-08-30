@@ -1,9 +1,12 @@
-// CANGATED2 experimental to look at consuming own events
-
+// CANGATED2_STATE experimental to look at consuming own events
+//
 /********************************************************************************************/
  /* CANGATE version using Duncan Greenwood's CBUS library
   * I have done this in such a way as to minimize changes to the event sending code.
-  *******************************************************
+  * New version starting to add state.
+  * At the moment the state of each incoming event is recorded.
+  * The next stage is to implement some way it can be queried.
+ *******************************************************
   *  Two, Three or Four input AND 'gates'   Four input 0R 'gate' for CBUS Events.
   *  Also invert output event to cretae NAND and NOR
   *  No Arduino programming required - black box - similar to standard MERG CBUS kits
