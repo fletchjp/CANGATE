@@ -130,8 +130,19 @@ CBUSSwitch pb_switch;               // switch object
   #define DEVICE_NUMBERS 0          //number of devices numbers connected to Arduino such as servos, relays etc. Can be used for Short events
 
 #ifdef CONSUME_OWN_EVENTS
-byte nopcodes = 4;
-const byte opcodes[] = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF };
+// Request event opcodes.
+// It is possible to send long or short request events.
+// It makes more sense to send the short ones with a device number.
+// These are going to be received using a framehandler.
+// See example code in CANASIGNAL
+// There is also an opcode RQEVN which can be sent 
+// to ask for the number of events available.
+// I have added it here - no code for it yet.
+// The reply is sent as NUMEV.
+// This is used by FCU. I have not seen it used in code.
+byte nopcodes = 7;
+const byte opcodes[] = {OPC_ACON, OPC_ACOF, OPC_ASON, OPC_ASOF,
+                        OPC_AREQ, OPC_ASRQ, OPC_RQEVN};
 #endif
 
 //
@@ -205,12 +216,16 @@ void setupCBUS()
 
 /********************************************************************************************/
 
+  enum class Event_State { OFF, ON, UNKNOWN };
+
   // Explore using arrays to reduce the amount of repetitive code.
   #define INCOMING_EVENT1_VALUES 104
   bool rxEvent[INCOMING_EVENT1_VALUES+1]; // These need to be set to 0.
+  Event_State rxEvent_state[INCOMING_EVENT1_VALUES+1];
   #define SEND_EVENT_VALUES 58
   bool sendEvent[SEND_EVENT_VALUES+1]; // Not all of these are used. All set to 1.
   int logicEventNumber[SEND_EVENT_VALUES+1]; // Not all of these are used. Set to 10 times the index.
+  Event_State sendEvent_state[SEND_EVENT_VALUES+1];
 
 /********************************************************************************************/
 //Variables
@@ -401,11 +416,13 @@ void setup () {
 // Set all these to zero.
   for (int i = 1; i <= INCOMING_EVENT1_VALUES; i++) {
     rxEvent[i] = 0;
+    rxEvent_state[i] = Event_State::UNKNOWN;
   }
 // Set all these to one. Not all are used.
   for (int i = 1; i <= SEND_EVENT_VALUES; i++) {
     sendEvent[i] = 1;
     logicEventNumber[i] = i*10;
+    sendEvent_state[i] = Event_State::UNKNOWN;
   }
 
   // end of setup
@@ -449,6 +466,7 @@ void twoInputAndGate(int ev1,int in1,int in2)
                 sendOnEvent(true, logicEventNumber[ev1]);
                 if (test_output) DEBUG_PRINT(F("Sent ON event ") << logicEventNumber[ev1]);
                 sendEvent[ev1] = 0;
+                sendEvent_state[ev1] = Event_State::ON;
          }
          if (invert == ev1 && sendEvent[ev1] == 1 && rxEvent[in1] == 1 && rxEvent[in2] == 1){    
                 sendOffEvent(true, logicEventNumber[ev1]);
