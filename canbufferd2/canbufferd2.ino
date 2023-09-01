@@ -24,6 +24,7 @@
 // This applies to Phil's board
 //#define USE_EXTERNAL_MCP2515
 ////////////////////////////////////////////////////////////////////////////////////
+#define CONSUME_OWN_EVENTS
 
 #define DEBUG 1       // set to 0 for no serial debug
 
@@ -102,6 +103,9 @@ const byte CAN_CS_PIN = 10;
 // CBUS objects
 CBUS2515 CBUS;                      // CBUS object
 CBUSConfig config;                  // configuration object
+#ifdef CONSUME_OWN_EVENTS
+CBUScoe coe(4);  // consume own events - buffer size = 4
+#endif
 
 CBUSLED ledGrn, ledYlw;             // LED objects
 CBUSSwitch pb_switch;               // switch object
@@ -174,7 +178,12 @@ void setupCBUS()
   CBUSParams params(config);
   params.setVersion(VER_MAJ, VER_MIN, VER_BETA);
   params.setModuleId(MODULE_ID);
+#ifdef CONSUME_OWN_EVENTS
+  params.setFlags(PF_FLiM | PF_COMBI | PF_COE);
+#else
   params.setFlags(PF_FLiM | PF_COMBI);
+#endif
+
 
   // assign to CBUS
   CBUS.setParams(params.getParams());
@@ -182,6 +191,10 @@ void setupCBUS()
 
   // register our CBUS event handler, to receive event messages of learned events
   CBUS.setEventHandler(eventhandler);
+#ifdef CONSUME_OWN_EVENTS
+  CBUS.consumeOwnEvents(&coe);
+//  CBUS.setFrameHandler(framehandler,(byte *) opcodes, nopcodes);
+#endif
 
   // set LED and switch pins and assign to CBUS
   ledGrn.setPin(GREEN_LED);
@@ -290,6 +303,9 @@ void printConfig(void)
   Serial << F("> © Duncan Greenwood (MERG M5767) 2021") << endl;
   Serial << F("> © John Fletcher (MERG M6777) 2023") << endl;
   Serial << F("> © Sven Rosvall (MERG M3777) 2021") << endl;
+#ifdef CONSUME_OWN_EVENTS
+  Serial << F("> Testing consuming own events") << endl;
+#endif
 }
 
 
