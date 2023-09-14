@@ -31,19 +31,6 @@ Details of how this works are in the README file for CANmINnOUT which can be fou
 
 https://github.com/MartinDaCosta53/CANmINnOUT
 
-
-### canbufferd
-
-This is the version of canbuffer using the ArduinoCBUS library, with similar changes to those in cangated.
-
-This now has the ability to send more than one event from any input event.
-
-The idea is to allow for events from CANBUFFER to be used by more than one CANGATE buffer.
-
-This is implemented by a value in EV3 of between 2 and 5 (the maximum).
-
-For EV3 = 2 this means that an event 1 input will generate events 10 and 11 if the multiplier is set to 10.
-
 ## Testing
 
 ### cangated and canbufferd
@@ -56,18 +43,9 @@ I reduced the requirec EVs to 3 from 20 (as only 3 are used in CANGATE) and also
 
 I have put lines in the output to the serial monitor to report the calculations.
 
-### cangate and canbuffer
+I have also done quite a lot of testing using events from a CANPAN working with FCU 1.5.3
 
-I have not tested these other than to confirm that they compile. I need to sort out hardware with push button and LEDs.
-
-## Actions 
-
-I have still to talk to Phil Silver to check what the actual requirements are.
-
-I have still to do testing with the FCU.
-
-
-John Fletcher <M6777> August 2023
+John Fletcher <M6777> August/September 2023
 
 P.S. I have not adjusted the version number or the modile ID value.
 
