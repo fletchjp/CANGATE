@@ -18,12 +18,6 @@ NOTE: There is conditional compilation in the codes to allow for different oscil
 
 These should work the same as CANGATE although they have not yet been tested.
 
-### cangate
-
- This version has functions to reduce the duplication in the code.
- 
- Also there are new functions sendOnEvent and sendOffevent which reduce the number of direct calls to the cbus object.
- This means that the event sending code is separate from the library implementation.
  
 ### cangated
 
@@ -37,25 +31,6 @@ Details of how this works are in the README file for CANmINnOUT which can be fou
 
 https://github.com/MartinDaCosta53/CANmINnOUT
 
-### cangated2
-
-This is an extended version of cangated which is experimentally storing output messages into the table of taught messages. 
-
-This is done by having a framehandler routine which is set to look only at messages with on and off (short or long) opcodes. 
-
-It then checks the node number to see if it is the same as the module node number. 
-
-If so it checks to see if the node and event are already in the learned event table and if not it adds an entry.
-
-The events for the module have to be read into FCU to update the information in FCU.
-
-The new entry does not have event variables set. This can be done from FCU once there is an entry in the table.
-
-### canbuffer
-
-This has had the same treatment (sort of) as I did for cangate, though the changes are much less.
-
-I think what I have from Phil is not the latest version as his code does not do the trick of changing the output event number. I have attempted to add that.
 
 ### canbufferd
 
