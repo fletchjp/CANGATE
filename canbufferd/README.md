@@ -43,6 +43,8 @@ I have put lines in the output to the serial monitor to report the calculations.
 
 I have also done quite a lot of testing using events from a CANPAN working with FCU 1.5.3
 
+All of the testing has been done using Arduino UNOs with prototypes of the Arduino shield (Kit 110)
+
 John Fletcher <M6777> August/September 2023
 
 P.S. I have not adjusted the version number or the modile ID value.
