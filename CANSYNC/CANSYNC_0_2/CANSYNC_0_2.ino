@@ -2,6 +2,16 @@
 //
 ///
 //
+////////////////////////////////////////////////////////////////////////////////////
+#define USE_CS_15
+// NOTE: The CS pin for CAN has to be changed from 10 to 15 as 10 is used by the lcd.
+
+// IMPORTANT: The external MCP2515 boards use 8Mhz
+//            The CBUS shield uses 16Mhz
+// Define this for the external board. This code must be compiled separately for each option.
+// This applies to Phil's board
+//#define USE_EXTERNAL_MCP2515
+////////////////////////////////////////////////////////////////////////////////////
 
 /*
   Copyright (C) Duncan Greenwood 2023 (duncan_greenwood@hotmail.com)
@@ -67,8 +77,18 @@
 // 1:  priority within the group (default 0)
 //
 
+
+#define DEBUG 1       // set to 0 for no serial debug
+
+#if DEBUG
+#define DEBUG_PRINT(S) Serial << S << endl
+#else
+#define DEBUG_PRINT(S)
+#endif
+
 // 3rd party libraries
 #include <Streaming.h>
+#include <EEPROM.h>   //Required to check EEPROM size
 
 // AVR libC
 #include <stdlib.h>
@@ -86,6 +106,22 @@ const byte VER_MAJ = 1;             // code major version
 const char VER_MIN = 'a';           // code minor version
 const byte VER_BETA = 0;            // code beta sub-version
 const byte MODULE_ID = 111;         // CBUS module type
+
+#ifdef USE_EXTERNAL_MCP2515
+const unsigned long CAN_OSC_FREQ = 8000000;     // Oscillator frequency on the CAN2515 board
+#else
+const unsigned long CAN_OSC_FREQ = 16000000;     // Oscillator frequency on the CAN2515 shield
+#endif
+
+//////////////////////////////////////////////////////////////////////////
+
+//CBUS pins
+const byte CAN_INT_PIN = 2;  // Only pin 2 and 3 support interrupts
+#ifdef USE_CS_15
+const byte CAN_CS_PIN = 15;  // For hardware with display only - normally 10
+#else
+const byte CAN_CS_PIN = 10;  // Normally 10
+#endif
 
 const byte LED_GRN = 8;             // CBUS green SLiM LED pin
 const byte LED_YLW = 9;             // CBUS yellow FLiM LED pin
@@ -131,6 +167,14 @@ void setupCBUS() {
   // initialise and load configuration
   module_config.setEEPROMtype(EEPROM_INTERNAL);
   module_config.begin();
+  unsigned int EEPROM_needed = module_config.EE_EVENTS_START + 
+              (module_config.EE_BYTES_PER_EVENT * module_config.EE_MAX_EVENTS);
+  Serial << F("> EEPROM required is ") << EEPROM_needed << endl;
+  if (EEPROM_needed < EEPROM.length()) {
+    Serial << F("> There is enough EEPROM for this case") << endl;
+  } else {
+    Serial << F("**** WARNING There is NOT enough EEPROM for this case ****") << endl;
+  }
 
   Serial << F("> mode = ") << ((module_config.FLiM) ? "FLiM" : "SLiM") << F(", CANID = ") << module_config.CANID;
   Serial << F(", NN = ") << module_config.nodeNum << endl;
@@ -191,7 +235,8 @@ void setupCBUS() {
 
   // configure and start CAN bus and CBUS message processing
   CBUS.setNumBuffers(32, 4);     // more buffers = more memory used, fewer = less
-  CBUS.setPins(10, 2);
+  CBUS.setOscFreq(CAN_OSC_FREQ);   // select the crystal frequency of the CAN module
+  CBUS.setPins(CAN_CS_PIN, CAN_INT_PIN);           // select pins for CAN bus CE and interrupt connections
 
   if (!CBUS.begin()) {
     Serial << F("> CAN init fail") << endl;
